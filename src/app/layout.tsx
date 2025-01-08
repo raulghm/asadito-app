@@ -1,4 +1,4 @@
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { DM_Sans, Playfair_Display, Caveat } from 'next/font/google'
 import Script from 'next/script'
 
 import { Providers } from './providers'
@@ -15,6 +15,11 @@ const dmSans = DM_Sans({
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
 })
 
 export const metadata: Metadata = {
@@ -51,7 +56,8 @@ export default function RootLayout({
           src="https://analytics.us.umami.is/script.js"
           data-website-id={process.env.UMAMI_ID}></Script>
       )}
-      <body className={`${dmSans.className} ${playfair.variable} ${dmSans.variable}`}>
+      <body
+        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

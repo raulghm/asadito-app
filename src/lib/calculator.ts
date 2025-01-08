@@ -11,9 +11,20 @@ interface Calculations {
     isCarbonSelected: boolean
   }) => number
   pricePerAdult: (totalPrice: number, adults: number) => number
+  lentilBurgers: number
+  grilledVegetables: number
+  marinatedTofu: number
+  veganCost: number
 }
 
 export function calculateAsado(user: User): Calculations {
+  const veganCalculations = {
+    lentilBurgers: user.vegan * 2,
+    grilledVegetables: user.vegan * 0.3,
+    marinatedTofu: user.vegan * 0.2,
+    veganCost: user.vegan * 8000,
+  }
+
   return {
     meat: Number((user.men * 0.35 + user.women * 0.25 + user.children * 0.2).toFixed(1)),
     sausage: Number((user.men * 0.1 + user.women * 0.05 + user.children * 0.05).toFixed(1)),
@@ -35,10 +46,13 @@ export function calculateAsado(user: User): Calculations {
 
       const carbonPrice = isCarbonSelected ? this.carbon(isSausageSelected) * 1156 : 0
 
-      return Math.round((meatPrice + sausagePrice + carbonPrice) / 10) * 10
+      const veganCost = veganCalculations.veganCost
+
+      return Math.round((meatPrice + sausagePrice + carbonPrice + veganCost) / 10) * 10
     },
     pricePerAdult: function (totalPrice: number, adults: number) {
       return Math.round(totalPrice / adults / 10) * 10
     },
+    ...veganCalculations,
   }
 }

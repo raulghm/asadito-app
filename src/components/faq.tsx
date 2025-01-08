@@ -179,7 +179,7 @@ export function FAQ() {
   return (
     <div className="space-y-12">
       <Section variant="blue-dark">
-        <h2 className="mb-8 font-playfair text-2xl font-semibold text-slate-900 dark:text-slate-100">
+        <h2 className="font-playfair mb-8 text-2xl font-semibold text-slate-900 dark:text-slate-100">
           Preguntas Frecuentes
         </h2>
 
@@ -188,7 +188,7 @@ export function FAQ() {
             <div
               key={index}
               className="rounded-xl border border-slate-200/50 bg-white/50 p-6 shadow-sm backdrop-blur-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700">
-              <h3 className="mb-3 font-playfair text-lg font-medium text-slate-900 dark:text-slate-100">
+              <h3 className="font-playfair mb-3 text-lg font-medium text-slate-900 dark:text-slate-100">
                 {item.question}
               </h3>
               <p className="leading-relaxed text-slate-600 dark:text-slate-400">{item.answer}</p>
@@ -220,7 +220,7 @@ export function FAQ() {
       </Section>
 
       <Section variant="gray">
-        <h2 className="mb-8 font-playfair text-2xl font-semibold text-slate-900 dark:text-slate-100">
+        <h2 className="font-playfair mb-8 text-2xl font-semibold text-slate-900 dark:text-slate-100">
           Glosario de Términos
         </h2>
 
@@ -229,7 +229,7 @@ export function FAQ() {
             <div
               key={index}
               className="rounded-xl border border-slate-200 bg-white/50 p-5 shadow-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
-              <h3 className="mb-2 font-playfair text-lg font-medium text-slate-900 dark:text-slate-100">
+              <h3 className="font-playfair mb-2 text-lg font-medium text-slate-900 dark:text-slate-100">
                 {item.question}
               </h3>
               <p className="leading-relaxed text-slate-600 dark:text-slate-400">{item.answer}</p>

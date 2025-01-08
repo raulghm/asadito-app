@@ -67,7 +67,11 @@ export const budgets = [
       },
       {
         name: 'Punta de ganso',
-        value: 12990,
+        value: 12490,
+      },
+      {
+        name: 'Malaya',
+        value: 11990,
       },
     ],
     sausage: 'Chorizos',

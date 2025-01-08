@@ -27,7 +27,7 @@ export function Header() {
         isScrolled && 'shadow-sm',
       )}>
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-3 sm:flex-row sm:py-4">
-        <nav className="flex items-center w-full justify-end gap-4">
+        <nav className="flex w-full items-center justify-end gap-4">
           <ThemeToggle />
         </nav>
       </div>

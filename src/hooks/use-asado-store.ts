@@ -1,12 +1,23 @@
 import { create } from 'zustand'
+
 import { Budget } from '~/types/types'
 
+interface User {
+  men: number
+  women: number
+  children: number
+  vegan: number
+}
+
+const initialState: User = {
+  men: 0,
+  women: 0,
+  children: 0,
+  vegan: 0,
+}
+
 interface AsadoState {
-  user: {
-    men: number
-    women: number
-    children: number
-  }
+  user: User
   budgetSelected: Budget | null
   isSausageSelected: boolean
   isCarbonSelected: boolean
@@ -17,11 +28,7 @@ interface AsadoState {
 }
 
 export const useAsadoStore = create<AsadoState>((set) => ({
-  user: {
-    men: 0,
-    women: 0,
-    children: 0,
-  },
+  user: initialState,
   budgetSelected: null,
   isSausageSelected: false,
   isCarbonSelected: false,

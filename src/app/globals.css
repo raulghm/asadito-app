@@ -89,3 +89,40 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.bg-wood {
+  background-image: url('/images/img-wood.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.bg-wood::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.bg-wood > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-wood:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bg-wood button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
