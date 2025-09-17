@@ -24,6 +24,7 @@ export function Header() {
       className={cn(
         'relative top-0 z-50 w-full transition-all duration-200',
         isScrolled && 'shadow-sm',
-      )}></motion.header>
+      )}
+    ></motion.header>
   )
 }

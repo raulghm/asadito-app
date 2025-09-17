@@ -59,10 +59,12 @@ export default function RootLayout({
         <Script
           defer
           src="https://analytics.us.umami.is/script.js"
-          data-website-id={process.env.UMAMI_ID}></Script>
+          data-website-id={process.env.UMAMI_ID}
+        ></Script>
       )}
       <body
-        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
+        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

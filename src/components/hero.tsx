@@ -16,7 +16,8 @@ export function Hero() {
             damping: 20,
             delay: 0.1,
           }}
-          className="mx-auto mb-4 flex justify-center">
+          className="mx-auto mb-4 flex justify-center"
+        >
           <div className="relative">
             {/* Glow effect */}
             <motion.div
@@ -48,12 +49,13 @@ export function Hero() {
 
         <div className="relative">
           <motion.h1
-            className="font-serif text-4xl sm:text-5xl lg:text-6xl text-amber-900 dark:text-amber-100"
+            className="font-serif text-4xl text-amber-900 dark:text-amber-100 sm:text-5xl lg:text-6xl"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}>
+            transition={{ duration: 0.8 }}
+          >
             Calculadora
-            <div className="relative block font-handwritten text-5xl sm:text-6xl lg:text-7xl text-orange-700 dark:text-orange-400 -mt-6 -rotate-2">
+            <div className="relative -mt-6 block -rotate-2 font-handwritten text-5xl text-orange-700 dark:text-orange-400 sm:text-6xl lg:text-7xl">
               asaditos
               <motion.svg
                 width="100%"
@@ -62,7 +64,8 @@ export function Hero() {
                 className="absolute -bottom-2 left-0"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1, delay: 1 }}>
+                transition={{ duration: 1, delay: 1 }}
+              >
                 <path
                   d="M0,5 Q25,0 50,5 T100,5"
                   fill="none"
@@ -77,10 +80,11 @@ export function Hero() {
 
         <div className="relative">
           <motion.p
-            className="font-serif text-lg sm:text-xl text-slate-700 dark:text-slate-300 max-w-2xl mx-auto"
+            className="mx-auto max-w-2xl font-serif text-lg text-slate-700 dark:text-slate-300 sm:text-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}>
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             Lleva tu asado al siguiente nivel.
           </motion.p>
         </div>
