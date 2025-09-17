@@ -107,6 +107,36 @@ Key Conventions
 - Ensure code is clean, well-documented, and follows the project's coding standards.
 - Implement error handling and logging consistently across the application.
 
+Commit Messages
+
+- Follow the Angular commit message convention:
+  - Format: `<type>(<scope>): <description>`
+  - Types:
+    - `feat`: New feature
+    - `fix`: Bug fix
+    - `docs`: Documentation changes
+    - `style`: Code style changes (formatting, etc)
+    - `refactor`: Code refactoring
+    - `perf`: Performance improvements
+    - `test`: Adding or modifying tests
+    - `chore`: Maintenance tasks, dependencies, etc
+  - Scope: Optional component/module affected (e.g., auth, ui)
+  - Description: Present tense, lowercase, no period
+  - Examples:
+    ```
+    feat(auth): add social login with Google
+    fix(api): handle null response from user endpoint
+    docs(readme): update installation instructions
+    style(components): format according to prettier rules
+    refactor(store): simplify state management logic
+    perf(images): optimize image loading
+    test(utils): add unit tests for date functions
+    chore(deps): update dependencies to latest versions
+    ```
+  - Breaking changes should be noted with `BREAKING CHANGE:` in footer
+  - Reference issues/PRs in footer when applicable
+
+
 Follow Official Documentation
 
 - Adhere to the official documentation for each technology used.
