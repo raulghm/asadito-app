@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { useCallback, useState, useEffect } from 'react'
 
-import { DrinksCalculator } from '~/components/drinks-calculator'
 import { ExportButtons } from '~/components/export-buttons'
 import { Footer } from '~/components/footer'
 import { Header } from '~/components/header'
@@ -25,9 +24,7 @@ import { calculateAsado } from '~/lib/calculator'
 import { generateId, formatPrice } from '~/lib/utils'
 import { Budget } from '~/types/types'
 
-// Import FavoriteAsado interface
 import type { FavoriteAsado } from '~/hooks/use-favorites-store'
-
 
 // Transform budget data to match the Budget interface
 function transformBudget(budget: (typeof budgets)[0]): Budget {
@@ -133,8 +130,7 @@ export default function Page() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="relative flex min-h-screen flex-col"
-    >
+      className="relative flex min-h-screen flex-col">
       {/* Background Image */}
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
@@ -183,8 +179,7 @@ export default function Page() {
                             onClick={() => setUser({ ...user, men: Math.max(0, user.men - 1) })}
                             disabled={user.men === 0}
                             aria-label="Disminuir número de hombres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -195,8 +190,7 @@ export default function Page() {
                             onClick={() => setUser({ ...user, men: Math.min(100, user.men + 1) })}
                             disabled={user.men >= 100}
                             aria-label="Aumentar número de hombres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             +
                           </button>
                         </div>
@@ -212,8 +206,7 @@ export default function Page() {
                             onClick={() => setUser({ ...user, women: Math.max(0, user.women - 1) })}
                             disabled={user.women === 0}
                             aria-label="Disminuir número de mujeres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -226,8 +219,7 @@ export default function Page() {
                             }
                             disabled={user.women >= 100}
                             aria-label="Aumentar número de mujeres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             +
                           </button>
                         </div>
@@ -245,8 +237,7 @@ export default function Page() {
                             }
                             disabled={user.children === 0}
                             aria-label="Disminuir número de niños"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -259,8 +250,7 @@ export default function Page() {
                             }
                             disabled={user.children >= 100}
                             aria-label="Aumentar número de niños"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             +
                           </button>
                         </div>
@@ -276,8 +266,7 @@ export default function Page() {
                             onClick={() => setUser({ ...user, vegan: Math.max(0, user.vegan - 1) })}
                             disabled={user.vegan === 0}
                             aria-label="Disminuir número de veganos"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -290,8 +279,7 @@ export default function Page() {
                             }
                             disabled={user.vegan >= 100}
                             aria-label="Aumentar número de veganos"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
                             +
                           </button>
                         </div>
@@ -317,8 +305,7 @@ export default function Page() {
                                 ? transformBudget(budgets.find((b) => b.id === Number(value))!)
                                 : null,
                             )
-                          }
-                        >
+                          }>
                           <SelectTrigger className="h-12 w-full border-2 text-white">
                             <SelectValue placeholder="Selecciona un presupuesto" />
                           </SelectTrigger>
@@ -327,8 +314,7 @@ export default function Page() {
                               <SelectItem
                                 key={budget.id}
                                 value={String(budget.id)}
-                                className="hover:bg-amber-900/20"
-                              >
+                                className="hover:bg-amber-900/20">
                                 {budget.name}
                               </SelectItem>
                             ))}
@@ -422,8 +408,7 @@ export default function Page() {
                               <div className="space-y-2">
                                 <label
                                   htmlFor="drinkConsumption"
-                                  className="inline-block text-sm font-medium"
-                                >
+                                  className="inline-block text-sm font-medium">
                                   Nivel de consumo
                                 </label>
                                 <div className="ml-2 inline-block w-1/3">
@@ -433,8 +418,7 @@ export default function Page() {
                                       setDrinkConsumptionLevel(
                                         value as 'light' | 'moderate' | 'high',
                                       )
-                                    }
-                                  >
+                                    }>
                                     <SelectTrigger className="w-full border-2  text-white">
                                       <SelectValue placeholder="Selecciona el nivel de consumo" />
                                     </SelectTrigger>
@@ -444,8 +428,7 @@ export default function Page() {
                                       </SelectItem>
                                       <SelectItem
                                         value="moderate"
-                                        className="hover:bg-amber-900/20"
-                                      >
+                                        className="hover:bg-amber-900/20">
                                         Moderado (100%) 💰
                                       </SelectItem>
                                       <SelectItem value="high" className="hover:bg-amber-900/20">
@@ -810,8 +793,7 @@ export default function Page() {
                           {favorites.map((favorite) => (
                             <div
                               key={favorite.id}
-                              className="flex items-center justify-between rounded-lg border-2  p-3 text-white"
-                            >
+                              className="flex items-center justify-between rounded-lg border-2  p-3 text-white">
                               <span className="font-handwritten text-lg">{favorite.name}</span>
                               <div className="flex gap-2">
                                 <button
@@ -833,14 +815,12 @@ export default function Page() {
                                     if (favorite.config.includeCarbon) toggleCarbon()
                                     if (favorite.config.includeVegetables) toggleVegetables()
                                   }}
-                                  className="rounded p-2 hover:bg-amber-900/20"
-                                >
+                                  className="rounded p-2 hover:bg-amber-900/20">
                                   Cargar 📂
                                 </button>
                                 <button
                                   onClick={() => removeFavorite(favorite.id)}
-                                  className="rounded p-2 hover:bg-amber-900/20"
-                                >
+                                  className="rounded p-2 hover:bg-amber-900/20">
                                   Eliminar 🗑️
                                 </button>
                               </div>
