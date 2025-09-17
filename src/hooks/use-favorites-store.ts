@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface FavoriteAsado {
+export interface FavoriteAsado {
   id: string
   name: string
   config: {
@@ -11,6 +11,7 @@ interface FavoriteAsado {
     budget: number
     includeSausage: boolean
     includeCarbon: boolean
+    includeVegetables: boolean
   }
 }
 

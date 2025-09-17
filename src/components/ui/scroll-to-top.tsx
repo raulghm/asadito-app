@@ -34,7 +34,8 @@ export function ScrollToTop() {
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
           className="fixed bottom-4 right-4 z-10 rounded-full bg-blue-600/90 p-3 text-white shadow-lg backdrop-blur hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
-          aria-label="Volver arriba">
+          aria-label="Volver arriba"
+        >
           <ArrowUp className="size-6" />
         </motion.button>
       )}

@@ -187,7 +187,8 @@ export function FAQ() {
           {faqItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-xl border border-slate-200/50 bg-white/50 p-6 shadow-sm backdrop-blur-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700">
+              className="rounded-xl border border-slate-200/50 bg-white/50 p-6 shadow-sm backdrop-blur-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700"
+            >
               <h3 className="font-playfair mb-3 text-lg font-medium text-slate-900 dark:text-slate-100">
                 {item.question}
               </h3>
@@ -228,7 +229,8 @@ export function FAQ() {
           {glossaryItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-xl border border-slate-200 bg-white/50 p-5 shadow-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+              className="rounded-xl border border-slate-200 bg-white/50 p-5 shadow-sm transition-all hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700"
+            >
               <h3 className="font-playfair mb-2 text-lg font-medium text-slate-900 dark:text-slate-100">
                 {item.question}
               </h3>

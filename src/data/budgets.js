@@ -7,126 +7,185 @@
 export const budgets = [
   {
     id: 0,
-    name: 'Económico',
+    name: 'Económico 🪙',
     meats: [
-      {
-        name: 'Abastero',
-        value: 8990,
-      },
-      {
-        name: 'Carnicero',
-        value: 8490,
-      },
-      {
-        name: 'Tapapecho',
-        value: 7990,
-      },
-      {
-        name: 'Tapabarriga',
-        value: 8290,
-      },
-      {
-        name: 'Asado de tira',
-        value: 8990,
-      },
-      {
-        name: 'Sobre costilla',
-        value: 7990,
-      },
-      {
-        name: 'Huachalomo',
-        value: 7490,
-      },
-      {
-        name: 'Punta paleta',
-        value: 7990,
-      },
+      { name: 'Carnicero', valueLider: 7790, valueJumbo: 8690 },
+      { name: 'Sobre costilla', valueLider: 8760, valueJumbo: 8690 },
+      { name: 'Tapapecho', valueLider: 8890, valueJumbo: 8690 },
+      { name: 'Abastero', valueLider: 9390, valueJumbo: 8690 },
+      { name: 'Huachalomo', valueLider: 7790, valueJumbo: 10290 },
+      { name: 'Tapabarriga', valueLider: 11190, valueJumbo: 9690 },
     ],
-    sausage: 'Chorizos o salchichas',
-    sausagePrice: 4990,
+    sausage: {
+      name: 'Chorizos o salchichas 🌭',
+      priceLider: 4390,
+      priceJumbo: 4490,
+    },
+    carbon: {
+      name: 'Carbon 🔥',
+      priceLider: 3500,
+      priceJumbo: 3500,
+    },
+    bread: {
+      name: 'Pan 🍞',
+      priceLider: 1100,
+      priceJumbo: 1100,
+    },
+    vegetables: {
+      name: 'Vegetales 🥗',
+      priceLider: 1976,
+      priceJumbo: 1976,
+    },
+    beverages: {
+      beer: {
+        name: 'Cerveza 🍺',
+        pricePerMl: 2.75,
+      },
+      wine: {
+        name: 'Vino 🍷',
+        pricePerMl: 9.32,
+      },
+      soda: {
+        name: 'Bebidas/Jugos 🥤',
+        pricePerMl: 1.1,
+      },
+    },
   },
   {
     id: 1,
-    name: 'Medio',
+    name: 'Medio 💰',
     meats: [
-      {
-        name: 'Plateada',
-        value: 9990,
-      },
-      {
-        name: 'Punta picana',
-        value: 10990,
-      },
-      {
-        name: 'Asiento',
-        value: 11490,
-      },
-      {
-        name: 'Lomo liso',
-        value: 11990,
-      },
-      {
-        name: 'Punta de ganso',
-        value: 12490,
-      },
-      {
-        name: 'Malaya',
-        value: 11990,
-      },
+      { name: 'Punta paleta', valueLider: 8990, valueJumbo: 10590 },
+      { name: 'Plateada', valueLider: 10390, valueJumbo: 11290 },
+      { name: 'Punta picana', valueLider: 12290, valueJumbo: 13490 },
+      { name: 'Malaya Cerdo', valueLider: 12390, valueJumbo: 13890 },
+      { name: 'Asado de tira', valueLider: 14990, valueJumbo: 12590 },
+      { name: 'Asiento', valueLider: 13190, valueJumbo: 14590 },
     ],
-    sausage: 'Chorizos',
-    sausagePrice: 5990,
+    sausage: {
+      name: 'Chorizos o salchichas',
+      priceLider: 4390,
+      priceJumbo: 4490,
+    },
+    carbon: {
+      name: 'Carbon',
+      priceLider: 3500,
+      priceJumbo: 3500,
+    },
+    bread: {
+      name: 'Pan',
+      priceLider: 1100,
+      priceJumbo: 1100,
+    },
+    vegetables: {
+      name: 'Vegetales',
+      priceLider: 1976,
+      priceJumbo: 1976,
+    },
+    beverages: {
+      beer: {
+        name: 'Cerveza',
+        pricePerMl: 2.75,
+      },
+      wine: {
+        name: 'Vino',
+        pricePerMl: 9.32,
+      },
+      soda: {
+        name: 'Gaseosa',
+        pricePerMl: 1.1,
+      },
+    },
   },
   {
     id: 2,
-    name: 'Alto',
+    name: 'Alto 💸',
     meats: [
-      {
-        name: 'Lomo vetado',
-        value: 13990,
-      },
-      {
-        name: 'Palanca',
-        value: 14990,
-      },
-      {
-        name: 'Filete',
-        value: 15990,
-      },
-      {
-        name: 'Entraña',
-        value: 16990,
-      },
+      { name: 'Punta de ganso', valueLider: 13990, valueJumbo: 14990 },
+      { name: 'Lomo liso', valueLider: 11990, valueJumbo: 16990 },
+      { name: 'Palanca', valueLider: 13990, valueJumbo: 14990 },
+      { name: 'Lomo vetado', valueLider: 12990, valueJumbo: 17990 },
+      { name: 'Filete', valueLider: 14990, valueJumbo: 18990 },
+      { name: 'Entraña', valueLider: 17990, valueJumbo: 18990 },
     ],
-    sausage: 'Longanizas',
-    sausagePrice: 7990,
+    sausage: {
+      name: 'Longanizas',
+      priceLider: 7990,
+      priceJumbo: 7990,
+    },
+    carbon: {
+      name: 'Carbon',
+      priceLider: 3500,
+      priceJumbo: 3500,
+    },
+    bread: {
+      name: 'Pan',
+      priceLider: 1100,
+      priceJumbo: 1100,
+    },
+    vegetables: {
+      name: 'Vegetales',
+      priceLider: 1976,
+      priceJumbo: 1976,
+    },
+    beverages: {
+      beer: {
+        name: 'Cerveza',
+        pricePerMl: 2.75,
+      },
+      wine: {
+        name: 'Vino',
+        pricePerMl: 9.32,
+      },
+      soda: {
+        name: 'Gaseosa',
+        pricePerMl: 1.1,
+      },
+    },
   },
   {
     id: 3,
-    name: 'Premium',
+    name: 'Premium 💎',
     meats: [
-      {
-        name: 'Wagyu',
-        value: 29990,
-      },
-      {
-        name: 'Angus',
-        value: 34990,
-      },
-      {
-        name: 'Filete premium',
-        value: 24990,
-      },
-      {
-        name: 'Lomo vetado premium',
-        value: 22990,
-      },
-      {
-        name: 'Otros cortes premium',
-        value: 23990,
-      },
+      { name: 'Lomo vetado premium', valueLider: 22990, valueJumbo: 32990 },
+      { name: 'Otros cortes premium', valueLider: 23990, valueJumbo: 33990 },
+      { name: 'Filete premium', valueLider: 24990, valueJumbo: 34990 },
+      { name: 'Wagyu', valueLider: 29990, valueJumbo: 39990 },
+      { name: 'Angus', valueLider: 34990, valueJumbo: 44990 },
     ],
-    sausage: 'Longanizas premium',
-    sausagePrice: 11990,
+    sausage: {
+      name: 'Longanizas premium',
+      priceLider: 11990,
+      priceJumbo: 11990,
+    },
+    carbon: {
+      name: 'Carbon',
+      priceLider: 3500,
+      priceJumbo: 3500,
+    },
+    bread: {
+      name: 'Pan',
+      priceLider: 1100,
+      priceJumbo: 1100,
+    },
+    vegetables: {
+      name: 'Vegetales',
+      priceLider: 1976,
+      priceJumbo: 1976,
+    },
+    beverages: {
+      beer: {
+        name: 'Cerveza',
+        pricePerMl: 2.75,
+      },
+      wine: {
+        name: 'Vino',
+        pricePerMl: 9.32,
+      },
+      soda: {
+        name: 'Gaseosa',
+        pricePerMl: 1.1,
+      },
+    },
   },
 ]

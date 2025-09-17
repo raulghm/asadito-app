@@ -16,15 +16,27 @@ const initialState: User = {
   vegan: 0,
 }
 
+type DrinkConsumptionLevel = 'light' | 'moderate' | 'high'
+
 interface AsadoState {
   user: User
   budgetSelected: Budget | null
   isSausageSelected: boolean
   isCarbonSelected: boolean
+  isVegetablesSelected: boolean
+  includeBeer: boolean
+  includeWine: boolean
+  includeSoda: boolean
+  drinkConsumptionLevel: DrinkConsumptionLevel
   setUser: (user: AsadoState['user']) => void
   setBudgetSelected: (budget: Budget | null) => void
   toggleSausage: () => void
   toggleCarbon: () => void
+  toggleVegetables: () => void
+  toggleBeer: () => void
+  toggleWine: () => void
+  toggleSoda: () => void
+  setDrinkConsumptionLevel: (level: DrinkConsumptionLevel) => void
 }
 
 export const useAsadoStore = create<AsadoState>((set) => ({
@@ -32,6 +44,11 @@ export const useAsadoStore = create<AsadoState>((set) => ({
   budgetSelected: null,
   isSausageSelected: false,
   isCarbonSelected: false,
+  isVegetablesSelected: false,
+  includeBeer: false,
+  includeWine: false,
+  includeSoda: false,
+  drinkConsumptionLevel: 'moderate',
   setUser: (user) => set({ user }),
   setBudgetSelected: (budget) => set({ budgetSelected: budget }),
   toggleSausage: () =>
@@ -42,4 +59,21 @@ export const useAsadoStore = create<AsadoState>((set) => ({
     set((state) => ({
       isCarbonSelected: !state.isCarbonSelected,
     })),
+  toggleVegetables: () =>
+    set((state) => ({
+      isVegetablesSelected: !state.isVegetablesSelected,
+    })),
+  toggleBeer: () =>
+    set((state) => ({
+      includeBeer: !state.includeBeer,
+    })),
+  toggleWine: () =>
+    set((state) => ({
+      includeWine: !state.includeWine,
+    })),
+  toggleSoda: () =>
+    set((state) => ({
+      includeSoda: !state.includeSoda,
+    })),
+  setDrinkConsumptionLevel: (level) => set({ drinkConsumptionLevel: level }),
 }))
