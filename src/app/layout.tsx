@@ -23,7 +23,7 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: 'Asadito-app',
+  title: 'Calculadora de Asaditos',
   description: 'Lleva tu asado al siguiente nivel',
   keywords: ['asado', 'calculadora'].join(', '),
   icons: {
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     apple: '/ico-meat.png',
   },
   openGraph: {
-    title: 'Asadito-app',
+    title: 'Calculadora de Asaditos',
     description: 'Lleva tu asado al siguiente nivel',
     url: 'https://asadito.netlify.app/',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Asadito-app',
+    title: 'Calculadora de Asaditos',
     description: 'Lleva tu asado al siguiente nivel',
   },
   robots: {
