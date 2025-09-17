@@ -94,7 +94,7 @@ export default function Page() {
     includeWine,
     includeSoda,
   })
-  const pricePerAdult = calculations.pricePerAdult(totalPrice, user.men + user.women)
+  const pricePerAdult = calculations.pricePerAdult(totalPrice, user.men + user.women + user.vegan)
 
   // Background image state for client-side hydration
   const [backgroundImage, setBackgroundImage] = useState('0.jpg')
@@ -677,6 +677,23 @@ export default function Page() {
                                 </span>
                               </p>
                             )}
+
+                            {user.vegan > 0 && (
+                              <>
+                                <p className="flex justify-between font-serif text-sm">
+                                  <span>Hamburguesas de lentejas</span>
+                                  <span>${formatPrice(user.vegan * 2 * 2000)}</span>
+                                </p>
+                                <p className="flex justify-between font-serif text-sm">
+                                  <span>Verduras asadas</span>
+                                  <span>${formatPrice(user.vegan * 0.3 * 3000)}</span>
+                                </p>
+                                <p className="flex justify-between font-serif text-sm">
+                                  <span>Tofu marinado</span>
+                                  <span>${formatPrice(user.vegan * 0.2 * 15000)}</span>
+                                </p>
+                              </>
+                            )}
                           </div>
 
                           <div className="/20 mt-4 border-t pt-3">
@@ -769,6 +786,18 @@ export default function Page() {
                               'Costo bebidas/jugos': includeSoda
                                 ? `$${formatPrice(calculations.soda * 0.001)}`
                                 : 'No incluido',
+                              'Hamburguesas de lentejas':
+                                user.vegan > 0
+                                  ? `${user.vegan * 2} unidades - $${formatPrice(user.vegan * 2 * 2000)}`
+                                  : 'No incluido',
+                              'Verduras asadas veganas':
+                                user.vegan > 0
+                                  ? `${user.vegan * 0.3}kg - $${formatPrice(user.vegan * 0.3 * 3000)}`
+                                  : 'No incluido',
+                              'Tofu marinado':
+                                user.vegan > 0
+                                  ? `${user.vegan * 0.2}kg - $${formatPrice(user.vegan * 0.2 * 15000)}`
+                                  : 'No incluido',
                               Total: `$${formatPrice(totalPrice)}`,
                               'Por adulto': `$${formatPrice(pricePerAdult)}`,
                             },

@@ -82,6 +82,9 @@ export function exportToPDF(data: ExportableData[], filename: string) {
     { key: 'Cerveza', icon: '•' },
     { key: 'Vino', icon: '•' },
     { key: 'Bebidas', icon: '•' },
+    { key: 'Hamburguesas de lentejas', icon: '•' },
+    { key: 'Verduras asadas veganas', icon: '•' },
+    { key: 'Tofu marinado', icon: '•' },
   ]
 
   let shoppingYPos = yPos + 3
