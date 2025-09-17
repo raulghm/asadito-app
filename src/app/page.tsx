@@ -159,7 +159,7 @@ export default function Page() {
           <div className="grid gap-8">
             <div className="mx-auto w-full max-w-3xl">
               <Card className="mb-8 rounded-3xl p-10 drop-shadow-xl">
-                <div className="p-6">
+                <div className="p-2 md:p-6">
                   <div className="relative">
                     <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
                       <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -411,7 +411,7 @@ export default function Page() {
                                   className="inline-block text-sm font-medium">
                                   Nivel de consumo
                                 </label>
-                                <div className="ml-2 inline-block w-1/3">
+                                <div className="md:ml-2 inline-block w-full md:w-1/3">
                                   <Select
                                     value={drinkConsumptionLevel}
                                     onValueChange={(value) =>
@@ -482,8 +482,8 @@ export default function Page() {
               </Card>
 
               {peopleCount > 0 && budgetSelected && (
-                <Card className="mb-8">
-                  <div className="p-8">
+                <Card className="mb-8 p-10">
+                  <div className="p-2 md:p-6">
                     <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
                       <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                         4
@@ -783,7 +783,7 @@ export default function Page() {
 
               {peopleCount > 0 && budgetSelected && (
                 <Card className="mb-8 hidden">
-                  <div className="p-6">
+                  <div className="p-2 md:p-6">
                     {favorites.length > 0 && (
                       <div className="space-y-2">
                         <p className="font-serif text-sm text-muted-foreground">
