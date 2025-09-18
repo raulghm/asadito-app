@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Calculadora de Asaditos',
     description: 'Lleva tu asado al siguiente nivel',
-    url: 'https://asadito.netlify.app/',
+    url: 'https://asadito-app.vercel.app',
     type: 'website',
   },
   twitter: {
@@ -58,13 +58,11 @@ export default function RootLayout({
       {process.env.NODE_ENV === 'production' && (
         <Script
           defer
-          src="https://analytics.us.umami.is/script.js"
-          data-website-id={process.env.UMAMI_ID}
-        ></Script>
+          src="https://cloud.umami.is/script.js"
+          data-website-id={process.env.UMAMI_ID}></Script>
       )}
       <body
-        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}
-      >
+        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>
