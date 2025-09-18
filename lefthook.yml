@@ -1,0 +1,25 @@
+# Lefthook configuration
+# Docs: https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: '*.{js,jsx,ts,tsx}'
+      run: pnpm lint:fix {staged_files}
+      stage_fixed: true
+    format:
+      glob: '*.{js,jsx,ts,tsx,json,md,yml,yaml}'
+      run: pnpm format {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    build:
+      run: pnpm build
+      fail_text: 'Build failed. Please fix the errors before pushing.'
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit $1
