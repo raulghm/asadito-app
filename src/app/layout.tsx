@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next'
 import { DM_Sans, Playfair_Display, Caveat } from 'next/font/google'
 import Script from 'next/script'
 
@@ -63,7 +64,10 @@ export default function RootLayout({
       )}
       <body
         className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Analytics />
+        </Providers>
       </body>
     </html>
   )
