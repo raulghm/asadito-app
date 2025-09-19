@@ -7,8 +7,12 @@ interface ExportButtonsProps {
 }
 
 export function ExportButtons({ data, filename }: ExportButtonsProps) {
-  const handleExportPDF = () => {
-    exportToPDF(data, filename)
+  const handleExportPDF = async () => {
+    try {
+      await exportToPDF(data, filename)
+    } catch (error) {
+      console.error('Error exporting PDF:', error)
+    }
   }
 
   return (

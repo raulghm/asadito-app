@@ -36,7 +36,14 @@ interface Calculations {
     budgetSelected: {
       id: number
       name: string
-      meats: { name: string; valueLider: number; valueJumbo: number }[]
+      meats: {
+        id: string
+        name: string
+        values: {
+          lider: { price: { normal: number; promo: number } }
+          jumbo: { price: { normal: number; promo: number } }
+        }
+      }[]
       sausage: { name: string; priceLider: number; priceJumbo: number }
       carbon: { name: string; priceLider: number; priceJumbo: number }
       bread: { name: string; priceLider: number; priceJumbo: number }
@@ -126,7 +133,14 @@ export function calculateAsado(
       budgetSelected: {
         id: number
         name: string
-        meats: { name: string; valueLider: number; valueJumbo: number }[]
+        meats: {
+          id: string
+          name: string
+          values: {
+            lider: { price: { normal: number; promo: number } }
+            jumbo: { price: { normal: number; promo: number } }
+          }
+        }[]
         sausage: { name: string; priceLider: number; priceJumbo: number }
         carbon: { name: string; priceLider: number; priceJumbo: number }
         bread: { name: string; priceLider: number; priceJumbo: number }
@@ -159,7 +173,8 @@ export function calculateAsado(
       const meatPrice =
         this.meat *
         (budgetSelected.meats.reduce(
-          (acc, meat) => acc + (meat.valueLider + meat.valueJumbo) / 2,
+          (acc, meat) =>
+            acc + (meat.values.lider.price.normal + meat.values.jumbo.price.normal) / 2,
           0,
         ) /
           budgetSelected.meats.length)

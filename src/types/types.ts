@@ -6,7 +6,14 @@ export interface Meat {
 export interface Budget {
   id: number
   name: string
-  meats: { name: string; valueLider: number; valueJumbo: number }[]
+  meats: {
+    id: string
+    name: string
+    values: {
+      lider: { price: { normal: number; promo: number } }
+      jumbo: { price: { normal: number; promo: number } }
+    }
+  }[]
   sausage: { name: string; priceLider: number; priceJumbo: number }
   carbon: { name: string; priceLider: number; priceJumbo: number }
   bread: { name: string; priceLider: number; priceJumbo: number }

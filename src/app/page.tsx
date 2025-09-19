@@ -17,12 +17,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select'
-import { budgets } from '~/data/budgets'
+import { budgets, lastUpdated } from '~/data/budgets'
 import { useAsadoStore } from '~/hooks/use-asado-store'
 import { useFavoritesStore } from '~/hooks/use-favorites-store'
 import { calculateAsado } from '~/lib/calculator'
 import { formatPrice } from '~/lib/utils'
 import { Budget } from '~/types/types'
+
+// Format date to Spanish locale
+function formatDateToSpanish(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('es-ES', {
+    month: 'short',
+    year: 'numeric',
+  })
+}
 
 // Transform budget data to match the Budget interface
 function transformBudget(budget: (typeof budgets)[0]): Budget {
@@ -281,6 +290,9 @@ export default function Page() {
                         </span>
                         Selecciona tu presupuesto
                       </h3>
+                      <p className="mb-4 text-xs text-white/60">
+                        Precios actualizados: {formatDateToSpanish(lastUpdated)}
+                      </p>
 
                       <div className="space-y-4">
                         <Select
@@ -308,44 +320,6 @@ export default function Page() {
                             ))}
                           </SelectContent>
                         </Select>
-
-                        {budgetSelected && (
-                          <div className="rounded-lg border p-5 text-white shadow-lg">
-                            <p className="mb-2 font-serif text-sm font-medium">
-                              Cortes recomendados:
-                            </p>
-                            <ul className="space-y-1 text-sm">
-                              {budgetSelected.id === 0 && (
-                                <>
-                                  {budgetSelected.meats.map((meat) => (
-                                    <li key={meat.name}>• {meat.name}</li>
-                                  ))}
-                                </>
-                              )}
-                              {budgetSelected.id === 1 && (
-                                <>
-                                  {budgetSelected.meats.map((meat) => (
-                                    <li key={meat.name}>• {meat.name}</li>
-                                  ))}
-                                </>
-                              )}
-                              {budgetSelected.id === 2 && (
-                                <>
-                                  {budgetSelected.meats.map((meat) => (
-                                    <li key={meat.name}>• {meat.name}</li>
-                                  ))}
-                                </>
-                              )}
-                              {budgetSelected.id === 3 && (
-                                <>
-                                  {budgetSelected.meats.map((meat) => (
-                                    <li key={meat.name}>• {meat.name}</li>
-                                  ))}
-                                </>
-                              )}
-                            </ul>
-                          </div>
-                        )}
 
                         {budgetSelected && (
                           <div className="flex flex-col gap-2">
@@ -486,6 +460,23 @@ export default function Page() {
                       <div className="rounded-lg border p-5 text-white shadow-lg">
                         <p className="mb-2 font-serif text-sm">Carne necesaria</p>
                         <p className="text-2xl font-bold">{calculations.meat}kg 🍖</p>
+                        {budgetSelected && (
+                          <div className="mt-3 border-t border-white/20 pt-3">
+                            <p className="mb-2 font-serif text-xs opacity-80">
+                              Cortes recomendados:
+                            </p>
+                            <div className="flex flex-wrap gap-1">
+                              {budgetSelected.meats.map((meat, index) => (
+                                <span
+                                  key={meat.id}
+                                  className="inline-block rounded-full bg-white/10 px-2 py-1 text-xs font-medium"
+                                >
+                                  {meat.name}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {isSausageSelected && (
@@ -580,7 +571,11 @@ export default function Page() {
                                 {formatPrice(
                                   calculations.meat *
                                     (budgetSelected?.meats.reduce(
-                                      (acc, meat) => acc + (meat.valueLider + meat.valueJumbo) / 2,
+                                      (acc, meat) =>
+                                        acc +
+                                        (meat.values.lider.price.normal +
+                                          meat.values.jumbo.price.normal) /
+                                          2,
                                       0,
                                     ) / (budgetSelected?.meats.length || 1) || 0),
                                 )}
@@ -725,6 +720,7 @@ export default function Page() {
                         <ExportButtons
                           data={[
                             {
+                              budgetId: budgetSelected?.id,
                               Hombres: user.men,
                               Mujeres: user.women,
                               Niños: user.children,
@@ -733,7 +729,11 @@ export default function Page() {
                               'Costo carne': `$${formatPrice(
                                 calculations.meat *
                                   (budgetSelected?.meats.reduce(
-                                    (acc, meat) => acc + (meat.valueLider + meat.valueJumbo) / 2,
+                                    (acc, meat) =>
+                                      acc +
+                                      (meat.values.lider.price.normal +
+                                        meat.values.jumbo.price.normal) /
+                                        2,
                                     0,
                                   ) / (budgetSelected?.meats.length || 1) || 0),
                               )}`,

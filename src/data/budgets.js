@@ -3,18 +3,125 @@
  * promediando ambos valores.
  * Solo carnes al vacio y con precios normales.
  * Se segmentan presupuestos en base a sus valores.
+ * Última actualización: 2025-09-19T12:59:08.455Z
  */
+
+// Fecha de última actualización de precios
+export const lastUpdated = '2025-09-19T12:59:08.455Z'
+
 export const budgets = [
   {
     id: 0,
     name: 'Económico 🪙',
     meats: [
-      { name: 'Carnicero', valueLider: 7790, valueJumbo: 8690 },
-      { name: 'Sobre costilla', valueLider: 8760, valueJumbo: 8690 },
-      { name: 'Tapapecho', valueLider: 8890, valueJumbo: 8690 },
-      { name: 'Abastero', valueLider: 9390, valueJumbo: 8690 },
-      { name: 'Huachalomo', valueLider: 7790, valueJumbo: 10290 },
-      { name: 'Tapabarriga', valueLider: 11190, valueJumbo: 9690 },
+      {
+        id: 'carnicero',
+        name: 'Carnicero',
+        values: {
+          lider: {
+            price: {
+              normal: 8990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 10790,
+              promo: 7990,
+            },
+          },
+        },
+      },
+      {
+        id: 'sobre-costilla',
+        name: 'Sobre costilla',
+        values: {
+          lider: {
+            price: {
+              normal: 8990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 10790,
+              promo: 7990,
+            },
+          },
+        },
+      },
+      {
+        id: 'tapapecho',
+        name: 'Tapapecho',
+        values: {
+          lider: {
+            price: {
+              normal: 8490,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 9990,
+              promo: 8990,
+            },
+          },
+        },
+      },
+      {
+        id: 'abastero',
+        name: 'Abastero',
+        values: {
+          lider: {
+            price: {
+              normal: 8990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 10790,
+              promo: 7990,
+            },
+          },
+        },
+      },
+      {
+        id: 'huachalomo',
+        name: 'Huachalomo',
+        values: {
+          lider: {
+            price: {
+              normal: 9990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 10790,
+              promo: 7990,
+            },
+          },
+        },
+      },
+      {
+        id: 'tapabarriga',
+        name: 'Tapabarriga',
+        values: {
+          lider: {
+            price: {
+              normal: 7990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 12190,
+              promo: 0,
+            },
+          },
+        },
+      },
     ],
     sausage: {
       name: 'Chorizos o salchichas 🌭',
@@ -23,8 +130,8 @@ export const budgets = [
     },
     carbon: {
       name: 'Carbon 🔥',
-      priceLider: 3500,
-      priceJumbo: 3500,
+      priceLider: 1596,
+      priceJumbo: 1596,
     },
     bread: {
       name: 'Pan 🍞',
@@ -55,12 +162,96 @@ export const budgets = [
     id: 1,
     name: 'Medio 💰',
     meats: [
-      { name: 'Punta paleta', valueLider: 8990, valueJumbo: 10590 },
-      { name: 'Plateada', valueLider: 10390, valueJumbo: 11290 },
-      { name: 'Punta picana', valueLider: 12290, valueJumbo: 13490 },
-      { name: 'Malaya Cerdo', valueLider: 12390, valueJumbo: 13890 },
-      { name: 'Asado de tira', valueLider: 14990, valueJumbo: 12590 },
-      { name: 'Asiento', valueLider: 13190, valueJumbo: 14590 },
+      {
+        id: 'punta-paleta',
+        name: 'Punta paleta',
+        values: {
+          lider: {
+            price: {
+              normal: 9990,
+              promo: 9990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 0,
+              promo: 0,
+            },
+          },
+        },
+      },
+      {
+        id: 'plateada',
+        name: 'Plateada',
+        values: {
+          lider: {
+            price: {
+              normal: 10290,
+              promo: 10290,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 10590,
+              promo: 11290,
+            },
+          },
+        },
+      },
+      {
+        id: 'punta-picana',
+        name: 'Punta picana',
+        values: {
+          lider: {
+            price: {
+              normal: 11590,
+              promo: 11590,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 13490,
+              promo: 14690,
+            },
+          },
+        },
+      },
+      {
+        id: 'asado-de-tira',
+        name: 'Asado de tira',
+        values: {
+          lider: {
+            price: {
+              normal: 7990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 12590,
+              promo: 12590,
+            },
+          },
+        },
+      },
+      {
+        id: 'asiento',
+        name: 'Asiento',
+        values: {
+          lider: {
+            price: {
+              normal: 13190,
+              promo: 13190,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 14590,
+              promo: 14590,
+            },
+          },
+        },
+      },
     ],
     sausage: {
       name: 'Chorizos o salchichas',
@@ -69,8 +260,8 @@ export const budgets = [
     },
     carbon: {
       name: 'Carbon',
-      priceLider: 3500,
-      priceJumbo: 3500,
+      priceLider: 1596,
+      priceJumbo: 1596,
     },
     bread: {
       name: 'Pan',
@@ -101,12 +292,114 @@ export const budgets = [
     id: 2,
     name: 'Alto 💸',
     meats: [
-      { name: 'Punta de ganso', valueLider: 13990, valueJumbo: 14990 },
-      { name: 'Lomo liso', valueLider: 11990, valueJumbo: 16990 },
-      { name: 'Palanca', valueLider: 13990, valueJumbo: 14990 },
-      { name: 'Lomo vetado', valueLider: 12990, valueJumbo: 17990 },
-      { name: 'Filete', valueLider: 14990, valueJumbo: 18990 },
-      { name: 'Entraña', valueLider: 17990, valueJumbo: 18990 },
+      {
+        id: 'punta-de-ganso',
+        name: 'Punta de ganso',
+        values: {
+          lider: {
+            price: {
+              normal: 13690,
+              promo: 13690,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 14990,
+              promo: 14990,
+            },
+          },
+        },
+      },
+      {
+        id: 'lomo-liso',
+        name: 'Lomo liso',
+        values: {
+          lider: {
+            price: {
+              normal: 14590,
+              promo: 11990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 16990,
+              promo: 16990,
+            },
+          },
+        },
+      },
+      {
+        id: 'palanca',
+        name: 'Palanca',
+        values: {
+          lider: {
+            price: {
+              normal: 7990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 14990,
+              promo: 14990,
+            },
+          },
+        },
+      },
+      {
+        id: 'lomo-vetado',
+        name: 'Lomo vetado',
+        values: {
+          lider: {
+            price: {
+              normal: 15390,
+              promo: 12990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 17990,
+              promo: 17990,
+            },
+          },
+        },
+      },
+      {
+        id: 'filete',
+        name: 'Filete',
+        values: {
+          lider: {
+            price: {
+              normal: 16690,
+              promo: 13990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 18990,
+              promo: 18990,
+            },
+          },
+        },
+      },
+      {
+        id: 'entrana',
+        name: 'Entraña',
+        values: {
+          lider: {
+            price: {
+              normal: 25990,
+              promo: 22990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 28990,
+              promo: 18990,
+            },
+          },
+        },
+      },
     ],
     sausage: {
       name: 'Longanizas',
@@ -115,8 +408,8 @@ export const budgets = [
     },
     carbon: {
       name: 'Carbon',
-      priceLider: 3500,
-      priceJumbo: 3500,
+      priceLider: 1596,
+      priceJumbo: 1596,
     },
     bread: {
       name: 'Pan',
@@ -147,11 +440,96 @@ export const budgets = [
     id: 3,
     name: 'Premium 💎',
     meats: [
-      { name: 'Lomo vetado premium', valueLider: 22990, valueJumbo: 32990 },
-      { name: 'Otros cortes premium', valueLider: 23990, valueJumbo: 33990 },
-      { name: 'Filete premium', valueLider: 24990, valueJumbo: 34990 },
-      { name: 'Wagyu', valueLider: 29990, valueJumbo: 39990 },
-      { name: 'Angus', valueLider: 34990, valueJumbo: 44990 },
+      {
+        id: 'lomo-vetado-premium',
+        name: 'Lomo vetado premium',
+        values: {
+          lider: {
+            price: {
+              normal: 7990,
+              promo: 6990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 32990,
+              promo: 32990,
+            },
+          },
+        },
+      },
+      {
+        id: 'otros-cortes-premium',
+        name: 'Otros cortes premium',
+        values: {
+          lider: {
+            price: {
+              normal: 23990,
+              promo: 23990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 33990,
+              promo: 33990,
+            },
+          },
+        },
+      },
+      {
+        id: 'filete-premium',
+        name: 'Filete premium',
+        values: {
+          lider: {
+            price: {
+              normal: 24990,
+              promo: 24990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 34990,
+              promo: 34990,
+            },
+          },
+        },
+      },
+      {
+        id: 'wagyu',
+        name: 'Wagyu',
+        values: {
+          lider: {
+            price: {
+              normal: 29990,
+              promo: 29990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 39990,
+              promo: 39990,
+            },
+          },
+        },
+      },
+      {
+        id: 'angus',
+        name: 'Angus',
+        values: {
+          lider: {
+            price: {
+              normal: 34990,
+              promo: 34990,
+            },
+          },
+          jumbo: {
+            price: {
+              normal: 44990,
+              promo: 44990,
+            },
+          },
+        },
+      },
     ],
     sausage: {
       name: 'Longanizas premium',
@@ -160,8 +538,8 @@ export const budgets = [
     },
     carbon: {
       name: 'Carbon',
-      priceLider: 3500,
-      priceJumbo: 3500,
+      priceLider: 1596,
+      priceJumbo: 1596,
     },
     bread: {
       name: 'Pan',
