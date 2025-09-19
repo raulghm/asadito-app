@@ -2,7 +2,7 @@ import { Button } from '~/components/ui/button'
 import { exportToPDF } from '~/utils/export-utils'
 
 interface ExportButtonsProps {
-  data: Record<string, any>[]
+  data: Record<string, string | number | boolean | null>[]
   filename: string
 }
 

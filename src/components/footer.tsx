@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
+import Image from 'next/image'
+
+import { HelpSection } from './help-section'
 
 export function Footer() {
   return (

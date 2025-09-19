@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useCallback, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { ExportButtons } from '~/components/export-buttons'
 import { Footer } from '~/components/footer'
@@ -21,10 +21,8 @@ import { budgets } from '~/data/budgets'
 import { useAsadoStore } from '~/hooks/use-asado-store'
 import { useFavoritesStore } from '~/hooks/use-favorites-store'
 import { calculateAsado } from '~/lib/calculator'
-import { generateId, formatPrice } from '~/lib/utils'
+import { formatPrice } from '~/lib/utils'
 import { Budget } from '~/types/types'
-
-import type { FavoriteAsado } from '~/hooks/use-favorites-store'
 
 // Transform budget data to match the Budget interface
 function transformBudget(budget: (typeof budgets)[0]): Budget {
@@ -78,7 +76,7 @@ export default function Page() {
     setDrinkConsumptionLevel,
   } = useAsadoStore()
 
-  const { favorites, addFavorite, removeFavorite } = useFavoritesStore()
+  const { favorites, removeFavorite } = useFavoritesStore()
 
   const peopleCount = user.men + user.women + user.children
 
@@ -104,33 +102,13 @@ export default function Page() {
     setBackgroundImage(`${Math.floor(Math.random() * 7)}.jpg`)
   }, [])
 
-  const handleSaveFavorite = useCallback(() => {
-    const now = new Date()
-    const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
-
-    const favorite: FavoriteAsado = {
-      id: generateId(),
-      name: `Asado ${dateStr}`,
-      config: {
-        men: user.men,
-        women: user.women,
-        children: user.children,
-        vegan: user.vegan,
-        budget: budgetSelected?.id || 0,
-        includeSausage: isSausageSelected,
-        includeCarbon: isCarbonSelected,
-        includeVegetables: isVegetablesSelected,
-      },
-    }
-    addFavorite(favorite)
-  }, [user, budgetSelected, isSausageSelected, isCarbonSelected, isVegetablesSelected, addFavorite])
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="relative flex min-h-screen flex-col">
+      className="relative flex min-h-screen flex-col"
+    >
       {/* Background Image */}
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
@@ -179,7 +157,8 @@ export default function Page() {
                             onClick={() => setUser({ ...user, men: Math.max(0, user.men - 1) })}
                             disabled={user.men === 0}
                             aria-label="Disminuir número de hombres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -190,7 +169,8 @@ export default function Page() {
                             onClick={() => setUser({ ...user, men: Math.min(100, user.men + 1) })}
                             disabled={user.men >= 100}
                             aria-label="Aumentar número de hombres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             +
                           </button>
                         </div>
@@ -206,7 +186,8 @@ export default function Page() {
                             onClick={() => setUser({ ...user, women: Math.max(0, user.women - 1) })}
                             disabled={user.women === 0}
                             aria-label="Disminuir número de mujeres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -219,7 +200,8 @@ export default function Page() {
                             }
                             disabled={user.women >= 100}
                             aria-label="Aumentar número de mujeres"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             +
                           </button>
                         </div>
@@ -237,7 +219,8 @@ export default function Page() {
                             }
                             disabled={user.children === 0}
                             aria-label="Disminuir número de niños"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -250,7 +233,8 @@ export default function Page() {
                             }
                             disabled={user.children >= 100}
                             aria-label="Aumentar número de niños"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             +
                           </button>
                         </div>
@@ -266,7 +250,8 @@ export default function Page() {
                             onClick={() => setUser({ ...user, vegan: Math.max(0, user.vegan - 1) })}
                             disabled={user.vegan === 0}
                             aria-label="Disminuir número de veganos"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             -
                           </button>
                           <div className="flex-1 py-2 text-center font-handwritten text-4xl font-bold">
@@ -279,7 +264,8 @@ export default function Page() {
                             }
                             disabled={user.vegan >= 100}
                             aria-label="Aumentar número de veganos"
-                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+                            className="px-4 py-3 text-lg font-bold outline-none transition-all duration-200 hover:bg-amber-900/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
                             +
                           </button>
                         </div>
@@ -298,14 +284,15 @@ export default function Page() {
 
                       <div className="space-y-4">
                         <Select
-                          value={String(budgetSelected?.id || '')}
+                          value={budgetSelected?.id !== undefined ? String(budgetSelected.id) : ''}
                           onValueChange={(value) =>
                             setBudgetSelected(
                               budgets.find((b) => b.id === Number(value))
                                 ? transformBudget(budgets.find((b) => b.id === Number(value))!)
                                 : null,
                             )
-                          }>
+                          }
+                        >
                           <SelectTrigger className="h-12 w-full border-2 text-white">
                             <SelectValue placeholder="Selecciona un presupuesto" />
                           </SelectTrigger>
@@ -314,7 +301,8 @@ export default function Page() {
                               <SelectItem
                                 key={budget.id}
                                 value={String(budget.id)}
-                                className="hover:bg-amber-900/20">
+                                className="hover:bg-amber-900/20"
+                              >
                                 {budget.name}
                               </SelectItem>
                             ))}
@@ -322,7 +310,7 @@ export default function Page() {
                         </Select>
 
                         {budgetSelected && (
-                          <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                          <div className="rounded-lg border p-5 text-white shadow-lg">
                             <p className="mb-2 font-serif text-sm font-medium">
                               Cortes recomendados:
                             </p>
@@ -408,17 +396,19 @@ export default function Page() {
                               <div className="space-y-2">
                                 <label
                                   htmlFor="drinkConsumption"
-                                  className="inline-block text-sm font-medium">
+                                  className="inline-block text-sm font-medium"
+                                >
                                   Nivel de consumo
                                 </label>
-                                <div className="md:ml-2 inline-block w-full md:w-1/3">
+                                <div className="inline-block w-full md:ml-2 md:w-1/3">
                                   <Select
                                     value={drinkConsumptionLevel}
                                     onValueChange={(value) =>
                                       setDrinkConsumptionLevel(
                                         value as 'light' | 'moderate' | 'high',
                                       )
-                                    }>
+                                    }
+                                  >
                                     <SelectTrigger className="w-full border-2  text-white">
                                       <SelectValue placeholder="Selecciona el nivel de consumo" />
                                     </SelectTrigger>
@@ -428,7 +418,8 @@ export default function Page() {
                                       </SelectItem>
                                       <SelectItem
                                         value="moderate"
-                                        className="hover:bg-amber-900/20">
+                                        className="hover:bg-amber-900/20"
+                                      >
                                         Moderado (100%) 💰
                                       </SelectItem>
                                       <SelectItem value="high" className="hover:bg-amber-900/20">
@@ -492,18 +483,18 @@ export default function Page() {
                     </h3>
 
                     <div className="space-y-6">
-                      <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                      <div className="rounded-lg border p-5 text-white shadow-lg">
                         <p className="mb-2 font-serif text-sm">Carne necesaria</p>
                         <p className="text-2xl font-bold">{calculations.meat}kg 🍖</p>
                       </div>
 
                       {isSausageSelected && (
                         <div className="grid grid-cols-2 gap-4">
-                          <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                          <div className="rounded-lg border p-5 text-white shadow-lg">
                             <p className="mb-2 font-serif text-sm">Embutidos</p>
                             <p className="text-xl font-semibold">{calculations.sausage}kg</p>
                           </div>
-                          <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                          <div className="rounded-lg border p-5 text-white shadow-lg">
                             <p className="mb-2 font-serif text-sm">Pan</p>
                             <p className="text-xl font-semibold">{calculations.bread}kg</p>
                           </div>
@@ -511,7 +502,7 @@ export default function Page() {
                       )}
 
                       {isVegetablesSelected && (
-                        <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                        <div className="rounded-lg border p-5 text-white shadow-lg">
                           <p className="mb-2 font-serif text-sm">Vegetales</p>
                           <p className="text-xl font-semibold">{calculations.vegetables}kg</p>
                         </div>
@@ -521,16 +512,16 @@ export default function Page() {
                         <div className="space-y-4">
                           <h4 className="text-base font-medium">Opciones veganas 🥬</h4>
                           <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                            <div className="rounded-lg border p-5 text-white shadow-lg">
                               <p className="mb-2 font-serif text-sm">Hamburguesas de lentejas</p>
                               <p className="text-xl font-semibold">{user.vegan * 2} unidades</p>
                             </div>
-                            <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                            <div className="rounded-lg border p-5 text-white shadow-lg">
                               <p className="mb-2 font-serif text-sm">Verduras asadas</p>
                               <p className="text-xl font-semibold">{user.vegan * 0.3}kg</p>
                             </div>
                           </div>
-                          <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                          <div className="rounded-lg border p-5 text-white shadow-lg">
                             <p className="mb-2 font-serif text-sm">Tofu marinado</p>
                             <p className="text-xl font-semibold">{user.vegan * 0.2}kg</p>
                           </div>
@@ -542,7 +533,7 @@ export default function Page() {
                           <h4 className="font-serif text-base font-medium">Bebestibles 🥤</h4>
                           <div className="grid gap-4 sm:grid-cols-3">
                             {includeBeer && (
-                              <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                              <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Cerveza</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.beer / 1000)}L
@@ -553,7 +544,7 @@ export default function Page() {
                               </div>
                             )}
                             {includeWine && (
-                              <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                              <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Vino</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.wine / 1000)}L
@@ -564,7 +555,7 @@ export default function Page() {
                               </div>
                             )}
                             {includeSoda && (
-                              <div className="/20 rounded-lg border p-5 text-white shadow-lg">
+                              <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Bebidas/Jugos</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.soda / 1000)}L
@@ -578,7 +569,7 @@ export default function Page() {
                         </div>
                       )}
 
-                      <div className="/20 mt-8 rounded-lg border p-6 text-white shadow-lg">
+                      <div className="mt-8 rounded-lg border p-6 text-white shadow-lg">
                         <p className="mb-4 font-serif text-lg font-semibold">Costos</p>
                         <div className="space-y-3">
                           <div className="space-y-2">
@@ -696,7 +687,7 @@ export default function Page() {
                             )}
                           </div>
 
-                          <div className="/20 mt-4 border-t pt-3">
+                          <div className="mt-4 border-t pt-3">
                             <p className="flex justify-between font-serif text-lg">
                               <span>Total</span>
                               <span className="font-bold">${formatPrice(totalPrice)}</span>
@@ -822,7 +813,8 @@ export default function Page() {
                           {favorites.map((favorite) => (
                             <div
                               key={favorite.id}
-                              className="flex items-center justify-between rounded-lg border-2  p-3 text-white">
+                              className="flex items-center justify-between rounded-lg border-2  p-3 text-white"
+                            >
                               <span className="font-handwritten text-lg">{favorite.name}</span>
                               <div className="flex gap-2">
                                 <button
@@ -844,12 +836,14 @@ export default function Page() {
                                     if (favorite.config.includeCarbon) toggleCarbon()
                                     if (favorite.config.includeVegetables) toggleVegetables()
                                   }}
-                                  className="rounded p-2 hover:bg-amber-900/20">
+                                  className="rounded p-2 hover:bg-amber-900/20"
+                                >
                                   Cargar 📂
                                 </button>
                                 <button
                                   onClick={() => removeFavorite(favorite.id)}
-                                  className="rounded p-2 hover:bg-amber-900/20">
+                                  className="rounded p-2 hover:bg-amber-900/20"
+                                >
                                   Eliminar 🗑️
                                 </button>
                               </div>

@@ -1,5 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
-import { DM_Sans, Playfair_Display, Caveat } from 'next/font/google'
+import { DM_Sans, Caveat } from 'next/font/google'
 import Script from 'next/script'
 
 import { Providers } from './providers'
@@ -11,11 +11,6 @@ import './globals.css'
 const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-})
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
 })
 
 const caveat = Caveat({
@@ -60,10 +55,10 @@ export default function RootLayout({
         <Script
           defer
           src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.UMAMI_ID}></Script>
+          data-website-id={process.env.UMAMI_ID}
+        ></Script>
       )}
-      <body
-        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
+      <body className={`${dmSans.className} ${dmSans.variable} ${caveat.variable}`}>
         <Providers>
           {children}
           <Analytics />
