@@ -39,7 +39,7 @@ export function Header() {
       <div className="container mx-auto flex justify-end p-4">
         <Drawer direction="right">
           <DrawerTrigger asChild>
-            <Button variant="link" size="sm" className="gap-2">
+            <Button variant="link" className="gap-2 font-serif">
               <HelpCircle className="size-4" />
               ¿Cómo funciona?
             </Button>
@@ -51,7 +51,7 @@ export function Header() {
                 Comprende cada detalle de cómo calculamos tu asado perfecto
               </DrawerDescription>
             </DrawerHeader>
-            <div className="overflow-y-aut flex-1 py-6">
+            <div className="flex-1 overflow-y-auto py-6">
               <HelpSection />
             </div>
             <DrawerFooter className="border-t">
