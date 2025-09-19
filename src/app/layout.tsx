@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Calculadora de Asaditos',
     description: 'Lleva tu asado al siguiente nivel',
-    url: 'https://asadito-app.vercel.app',
+    url: 'https://asaditoapp.com',
     type: 'website',
   },
   twitter: {

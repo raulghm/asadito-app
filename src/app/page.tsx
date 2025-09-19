@@ -794,6 +794,19 @@ export default function Page() {
                             },
                           ]}
                           filename="asado-calculo"
+                          calculations={{
+                            meat: calculations.meat,
+                            sausage: isSausageSelected ? calculations.sausage : 0,
+                            bread: isSausageSelected ? calculations.bread : 0,
+                            vegetables: isVegetablesSelected ? calculations.vegetables : 0,
+                            carbon: isCarbonSelected ? calculations.carbon(isSausageSelected) : 0,
+                            beer: includeBeer ? calculations.beer : 0,
+                            wine: includeWine ? calculations.wine : 0,
+                            soda: includeSoda ? calculations.soda : 0,
+                            totalPrice: totalPrice,
+                          }}
+                          budgetName={budgetSelected?.name}
+                          peopleCount={peopleCount}
                         />
                       </div>
                     </div>
