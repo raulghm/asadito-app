@@ -23,12 +23,12 @@ export const metadata: Metadata = {
   description: 'Lleva tu asado al siguiente nivel',
   keywords: ['asado', 'calculadora'].join(', '),
   icons: {
-    icon: '/ico-meat.png',
-    shortcut: '/ico-meat.png',
-    apple: '/ico-meat.png',
+    icon: '/ico-app.png',
+    shortcut: '/ico-app.png',
+    apple: '/ico-app.png',
   },
   openGraph: {
-    title: 'Calculadora de Asaditos',
+    title: 'Calculadora de Asaditospa',
     description: 'Lleva tu asado al siguiente nivel',
     url: 'https://asaditoapp.com',
     type: 'website',

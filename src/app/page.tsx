@@ -717,6 +717,7 @@ export default function Page() {
                       />
 
                       <div className="mt-4">
+                        <p className="mb-4 font-serif font-semibold">Compartir</p>
                         <ExportButtons
                           data={[
                             {
@@ -804,9 +805,17 @@ export default function Page() {
                             wine: includeWine ? calculations.wine : 0,
                             soda: includeSoda ? calculations.soda : 0,
                             totalPrice: totalPrice,
+                            pricePerAdult: pricePerAdult,
                           }}
                           budgetName={budgetSelected?.name}
                           peopleCount={peopleCount}
+                          recommendedCuts={budgetSelected?.meats}
+                          peopleBreakdown={{
+                            men: user.men,
+                            women: user.women,
+                            children: user.children,
+                            vegan: user.vegan,
+                          }}
                         />
                       </div>
                     </div>

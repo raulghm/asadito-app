@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 export function Hero() {
   return (
-    <section id="home" className="relative mb-8 text-center sm:mb-16">
-      <div className="mx-auto max-w-4xl space-y-4 px-4 sm:space-y-8">
+    <section id="home" className="relative mb-8 select-none text-center sm:mb-16">
+      <div className="mx-auto max-w-4xl space-y-5 px-4 sm:space-y-8">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -55,7 +55,7 @@ export function Hero() {
             transition={{ duration: 0.8 }}
           >
             Calculadora
-            <div className="relative -mt-2 block -rotate-2 font-handwritten text-4xl text-orange-700 dark:text-orange-400 sm:-mt-4 sm:text-5xl md:-mt-6 md:text-6xl lg:text-7xl">
+            <div className="relative -mt-4 block -rotate-2 font-handwritten text-4xl text-orange-700 dark:text-orange-400 sm:-mt-4 sm:text-5xl md:-mt-6 md:text-6xl lg:text-7xl">
               asaditos
               <motion.svg
                 width="100%"

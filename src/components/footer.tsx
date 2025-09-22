@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="py-10 text-center text-sm text-muted-foreground">
+    <footer className="py-6 text-center text-sm text-muted-foreground">
       <div className="container">
         <motion.p
           className="flex items-center justify-center gap-1.5"

@@ -127,7 +127,7 @@ export function calculateAsado(
     vegetables: Number((user.men * 0.2 + user.women * 0.15 + user.children * 0.15).toFixed(1)),
     ...drinkCalculations,
     carbon: function (isSausageSelected: boolean) {
-      return Number((this.meat + (isSausageSelected ? this.sausage : 0)).toFixed(1))
+      return Number(((this.meat + (isSausageSelected ? this.sausage : 0)) * 1.2).toFixed(1))
     },
     totalPrice: function (params: {
       budgetSelected: {
