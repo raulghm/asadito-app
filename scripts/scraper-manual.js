@@ -1135,6 +1135,8 @@ async function updateBudgetsFile(productId, priceData, supermarket = 'lider') {
  * Última actualización: ${new Date().toISOString()}
  */
 export const budgets = ${JSON.stringify(budgetsArray, null, 2)}
+
+export const lastUpdated = '${new Date().toISOString()}'
 `
 
       fs.writeFileSync(budgetsPath, updatedContent, 'utf8')
