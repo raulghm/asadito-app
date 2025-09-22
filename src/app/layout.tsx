@@ -22,11 +22,6 @@ export const metadata: Metadata = {
   title: 'Calculadora de Asaditos',
   description: 'Lleva tu asado al siguiente nivel',
   keywords: ['asado', 'calculadora'].join(', '),
-  icons: {
-    icon: '/ico-app.png',
-    shortcut: '/ico-app.png',
-    apple: '/ico-app.png',
-  },
   openGraph: {
     title: 'Calculadora de Asaditospa',
     description: 'Lleva tu asado al siguiente nivel',
