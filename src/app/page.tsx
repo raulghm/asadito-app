@@ -528,11 +528,12 @@ export default function Page() {
                               <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Cerveza</p>
                                 <p className="text-xl font-semibold">
-                                  {Math.ceil(calculations.beer / 1000)}L
+                                  {Math.ceil(calculations.beer / 330)}{' '}
+                                  {Math.ceil(calculations.beer / 330) === 1
+                                    ? 'botella'
+                                    : 'botellas'}
                                 </p>
-                                <p className="mt-1 text-sm text-gray-400">
-                                  ({Math.ceil(calculations.beer / 350)} latas de 350ml)
-                                </p>
+                                <p className="mt-1 text-sm text-gray-400">de 330ml</p>
                               </div>
                             )}
                             {includeWine && (
@@ -631,8 +632,8 @@ export default function Page() {
                                 <span>
                                   $
                                   {formatPrice(
-                                    Math.ceil(calculations.beer / 350) *
-                                      350 *
+                                    Math.ceil(calculations.beer / 330) *
+                                      330 *
                                       (budgetSelected?.beverages.beer.pricePerMl || 0),
                                   )}
                                 </span>
@@ -764,7 +765,7 @@ export default function Page() {
                                 ? `$${formatPrice(calculations.carbon(isSausageSelected) * 3000)}`
                                 : 'No incluido',
                               Cerveza: includeBeer
-                                ? `${Math.ceil(calculations.beer / 1000)}L (${Math.ceil(calculations.beer / 350)} latas)`
+                                ? `${Math.ceil(calculations.beer / 1000)}L (${Math.ceil(calculations.beer / 330)} botellas)`
                                 : 'No incluido',
                               'Costo cerveza': includeBeer
                                 ? `$${formatPrice(calculations.beer * 0.002)}`

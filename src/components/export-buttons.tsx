@@ -82,7 +82,7 @@ export function ExportButtons({
     }
 
     if (calculations.beer > 0) {
-      message += `🍺 Cerveza: ${Math.ceil(calculations.beer / 350)} latas\n`
+      message += `🍺 Cerveza: ${Math.ceil(calculations.beer / 330)} botellas\n`
     }
 
     if (calculations.wine > 0) {

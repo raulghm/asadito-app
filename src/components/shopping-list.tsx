@@ -46,13 +46,22 @@ export function ShoppingList({ calculations }: ShoppingListProps) {
             </>
           )}
           {calculations.beer && calculations.beer > 0 && (
-            <p>• Cerveza: {Math.ceil(calculations.beer / 350)} latas de 350ml</p>
+            <p>
+              • Cerveza: {Math.ceil(calculations.beer / 330)}{' '}
+              {Math.ceil(calculations.beer / 330) === 1 ? 'botella' : 'botellas'} de 330ml
+            </p>
           )}
           {calculations.wine && calculations.wine > 0 && (
-            <p>• Vino: {Math.ceil(calculations.wine / 750)} botellas</p>
+            <p>
+              • Vino: {Math.ceil(calculations.wine / 750)}{' '}
+              {Math.ceil(calculations.wine / 750) === 1 ? 'botella' : 'botellas'}
+            </p>
           )}
           {calculations.soda && calculations.soda > 0 && (
-            <p>• Bebidas/Jugos: {Math.ceil(calculations.soda / 2000)} botellas de 2L</p>
+            <p>
+              • Bebidas/Jugos: {Math.ceil(calculations.soda / 2000)}{' '}
+              {Math.ceil(calculations.soda / 2000) === 1 ? 'botella' : 'botellas'} de 2L
+            </p>
           )}
           {calculations.carbon > 0 && <p>• Carbón: {calculations.carbon}kg</p>}
         </div>
