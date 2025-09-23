@@ -19,11 +19,11 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: 'Calculadora de Asaditos',
+  title: 'AsaditoApp - Calculadora de Asaditos',
   description: 'Lleva tu asado al siguiente nivel',
   keywords: ['asado', 'calculadora'].join(', '),
   openGraph: {
-    title: 'Calculadora de Asaditospa',
+    title: 'Calculadora de Asaditos',
     description: 'Lleva tu asado al siguiente nivel',
     url: 'https://asaditoapp.com',
     type: 'website',
