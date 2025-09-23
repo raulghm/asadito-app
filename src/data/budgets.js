@@ -446,14 +446,14 @@ export const budgets = [
         values: {
           lider: {
             price: {
-              normal: 7990,
-              promo: 6990,
+              normal: null,
+              promo: null,
             },
           },
           jumbo: {
             price: {
-              normal: 32990,
-              promo: 32990,
+              normal: 29990,
+              promo: 29990,
             },
           },
         },

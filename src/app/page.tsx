@@ -28,6 +28,7 @@ import { Budget } from '~/types/types'
 function formatDateToSpanish(dateString: string): string {
   const date = new Date(dateString)
   return date.toLocaleDateString('es-ES', {
+    day: 'numeric',
     month: 'short',
     year: 'numeric',
   })
@@ -538,22 +539,24 @@ export default function Page() {
                               <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Vino</p>
                                 <p className="text-xl font-semibold">
-                                  {Math.ceil(calculations.wine / 1000)}L
+                                  {Math.ceil(calculations.wine / 750)}{' '}
+                                  {Math.ceil(calculations.wine / 750) === 1
+                                    ? 'botella'
+                                    : 'botellas'}
                                 </p>
-                                <p className="mt-1 text-sm text-gray-400">
-                                  ({Math.ceil(calculations.wine / 750)} botellas)
-                                </p>
+                                <p className="mt-1 text-sm text-gray-400">de 750ml</p>
                               </div>
                             )}
                             {includeSoda && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Bebidas/Jugos</p>
                                 <p className="text-xl font-semibold">
-                                  {Math.ceil(calculations.soda / 1000)}L
+                                  {Math.ceil(calculations.soda / 2000)}{' '}
+                                  {Math.ceil(calculations.soda / 2000) === 1
+                                    ? 'botella'
+                                    : 'botellas'}
                                 </p>
-                                <p className="mt-1 text-sm text-gray-400">
-                                  ({Math.ceil(calculations.soda / 2000)} botellas de 2L)
-                                </p>
+                                <p className="mt-1 text-sm text-gray-400">de 2L</p>
                               </div>
                             )}
                           </div>
