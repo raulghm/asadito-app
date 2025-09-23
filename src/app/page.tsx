@@ -467,7 +467,7 @@ export default function Page() {
                               Cortes recomendados:
                             </p>
                             <div className="flex flex-wrap gap-1">
-                              {budgetSelected.meats.map((meat, index) => (
+                              {budgetSelected.meats.map((meat) => (
                                 <span
                                   key={meat.id}
                                   className="inline-block rounded-full bg-white/10 px-2 py-1 text-xs font-medium"
@@ -576,8 +576,8 @@ export default function Page() {
                                     (budgetSelected?.meats.reduce(
                                       (acc, meat) =>
                                         acc +
-                                        (meat.values.lider.price.normal +
-                                          meat.values.jumbo.price.normal) /
+                                        ((meat.values.lider.price.normal || 0) +
+                                          (meat.values.jumbo.price.normal || 0)) /
                                           2,
                                       0,
                                     ) / (budgetSelected?.meats.length || 1) || 0),
@@ -735,8 +735,8 @@ export default function Page() {
                                   (budgetSelected?.meats.reduce(
                                     (acc, meat) =>
                                       acc +
-                                      (meat.values.lider.price.normal +
-                                        meat.values.jumbo.price.normal) /
+                                      ((meat.values.lider.price.normal || 0) +
+                                        (meat.values.jumbo.price.normal || 0)) /
                                         2,
                                     0,
                                   ) / (budgetSelected?.meats.length || 1) || 0),

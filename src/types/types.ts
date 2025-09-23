@@ -10,8 +10,8 @@ export interface Budget {
     id: string
     name: string
     values: {
-      lider: { price: { normal: number; promo: number } }
-      jumbo: { price: { normal: number; promo: number } }
+      lider: { price: { normal: number | null; promo: number | null } }
+      jumbo: { price: { normal: number | null; promo: number | null } }
     }
   }[]
   sausage: { name: string; priceLider: number; priceJumbo: number }

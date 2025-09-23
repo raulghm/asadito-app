@@ -40,8 +40,8 @@ interface Calculations {
         id: string
         name: string
         values: {
-          lider: { price: { normal: number; promo: number } }
-          jumbo: { price: { normal: number; promo: number } }
+          lider: { price: { normal: number | null; promo: number | null } }
+          jumbo: { price: { normal: number | null; promo: number | null } }
         }
       }[]
       sausage: { name: string; priceLider: number; priceJumbo: number }
@@ -137,8 +137,8 @@ export function calculateAsado(
           id: string
           name: string
           values: {
-            lider: { price: { normal: number; promo: number } }
-            jumbo: { price: { normal: number; promo: number } }
+            lider: { price: { normal: number | null; promo: number | null } }
+            jumbo: { price: { normal: number | null; promo: number | null } }
           }
         }[]
         sausage: { name: string; priceLider: number; priceJumbo: number }
@@ -174,7 +174,8 @@ export function calculateAsado(
         this.meat *
         (budgetSelected.meats.reduce(
           (acc, meat) =>
-            acc + (meat.values.lider.price.normal + meat.values.jumbo.price.normal) / 2,
+            acc +
+            ((meat.values.lider.price.normal || 0) + (meat.values.jumbo.price.normal || 0)) / 2,
           0,
         ) /
           budgetSelected.meats.length)
