@@ -99,8 +99,8 @@ export function calculateAsado(
 ): Calculations {
   const veganCalculations = {
     lentilBurgers: user.vegan * 2,
-    grilledVegetables: user.vegan * 0.3,
-    marinatedTofu: user.vegan * 0.2,
+    grilledVegetables: Number((user.vegan * 0.3).toFixed(1)),
+    marinatedTofu: Number((user.vegan * 0.2).toFixed(1)),
     veganCost: user.vegan * 8000,
   }
 
