@@ -47,7 +47,22 @@ function getImageAsBase64(src: string): Promise<string> {
   })
 }
 
-export async function exportToPDF(data: ExportableData[], filename: string) {
+export async function exportToPDF(
+  data: ExportableData[],
+  filename: string,
+  calculations?: {
+    meat: number
+    sausage: number
+    bread: number
+    vegetables: number
+    carbon: number
+    beer: number
+    wine: number
+    soda: number
+    totalPrice: number
+    pricePerAdult: number
+  },
+) {
   const doc = new jsPDF()
   const pageWidth = doc.internal.pageSize.getWidth()
   const pageHeight = doc.internal.pageSize.getHeight()
@@ -138,39 +153,88 @@ export async function exportToPDF(data: ExportableData[], filename: string) {
   doc.setFontSize(11)
   doc.setFont('helvetica', 'normal') // Sans font
 
-  const shoppingItems = [
-    { key: 'Carne necesaria', icon: '•' },
-    { key: 'Embutidos', icon: '•' },
-    { key: 'Pan', icon: '•' },
-    { key: 'Vegetales', icon: '•' },
-    { key: 'Carbón', icon: '•' },
-    { key: 'Cerveza', icon: '•' },
-    { key: 'Vino', icon: '•' },
-    { key: 'Bebidas', icon: '•' },
-    { key: 'Hamburguesas de lentejas', icon: '•' },
-    { key: 'Verduras asadas veganas', icon: '•' },
-    { key: 'Tofu marinado', icon: '•' },
-  ]
-
   let shoppingYPos = yPos + 3
-  shoppingItems.forEach((shopItem) => {
-    const value = item[shopItem.key]
-    // More robust filtering for valid values
-    if (
-      value &&
-      value !== 'No incluido' &&
-      value !== 0 &&
-      value !== '0kg' &&
-      value !== '0.0kg' &&
-      !value.toString().startsWith('0kg') &&
-      !value.toString().startsWith('0.0')
-    ) {
-      const cleanKey = cleanTextForPDF(shopItem.key)
-      const cleanValue = typeof value === 'string' ? cleanTextForPDF(value) : value
-      doc.text(`${shopItem.icon} ${cleanKey}: ${cleanValue}`, margin + 15, shoppingYPos)
-      shoppingYPos += 6
-    }
-  })
+
+  // Use calculations if available for better formatting, otherwise fall back to data items
+  if (calculations) {
+    // Format items with proper bottle calculations
+    const calculatedItems = [
+      { key: 'Carne', value: `${calculations.meat}kg`, show: calculations.meat > 0 },
+      { key: 'Embutidos', value: `${calculations.sausage}kg`, show: calculations.sausage > 0 },
+      { key: 'Pan', value: `${calculations.bread}kg`, show: calculations.bread > 0 },
+      {
+        key: 'Vegetales',
+        value: `${calculations.vegetables}kg`,
+        show: calculations.vegetables > 0,
+      },
+      { key: 'Carbon', value: `${calculations.carbon}kg`, show: calculations.carbon > 0 },
+      {
+        key: 'Cerveza',
+        value: (() => {
+          const bottles = Math.ceil(calculations.beer / 330)
+          return `${bottles} ${bottles === 1 ? 'botella' : 'botellas'} de 330ml`
+        })(),
+        show: calculations.beer > 0,
+      },
+      {
+        key: 'Vino',
+        value: (() => {
+          const bottles = Math.ceil(calculations.wine / 750)
+          return `${bottles} ${bottles === 1 ? 'botella' : 'botellas'} de 750ml`
+        })(),
+        show: calculations.wine > 0,
+      },
+      {
+        key: 'Bebidas',
+        value: (() => {
+          const bottles = Math.ceil(calculations.soda / 2000)
+          return `${bottles} ${bottles === 1 ? 'botella' : 'botellas'} de 2L`
+        })(),
+        show: calculations.soda > 0,
+      },
+    ]
+
+    calculatedItems.forEach((calcItem) => {
+      if (calcItem.show) {
+        doc.text(`• ${calcItem.key}: ${calcItem.value}`, margin + 15, shoppingYPos)
+        shoppingYPos += 6
+      }
+    })
+  } else {
+    // Fallback to original logic for backwards compatibility
+    const shoppingItems = [
+      { key: 'Carne necesaria', icon: '•' },
+      { key: 'Embutidos', icon: '•' },
+      { key: 'Pan', icon: '•' },
+      { key: 'Vegetales', icon: '•' },
+      { key: 'Carbón', icon: '•' },
+      { key: 'Cerveza', icon: '•' },
+      { key: 'Vino', icon: '•' },
+      { key: 'Bebidas', icon: '•' },
+      { key: 'Hamburguesas de lentejas', icon: '•' },
+      { key: 'Verduras asadas veganas', icon: '•' },
+      { key: 'Tofu marinado', icon: '•' },
+    ]
+
+    shoppingItems.forEach((shopItem) => {
+      const value = item[shopItem.key]
+      // More robust filtering for valid values
+      if (
+        value &&
+        value !== 'No incluido' &&
+        value !== 0 &&
+        value !== '0kg' &&
+        value !== '0.0kg' &&
+        !value.toString().startsWith('0kg') &&
+        !value.toString().startsWith('0.0')
+      ) {
+        const cleanKey = cleanTextForPDF(shopItem.key)
+        const cleanValue = typeof value === 'string' ? cleanTextForPDF(value) : value
+        doc.text(`${shopItem.icon} ${cleanKey}: ${cleanValue}`, margin + 15, shoppingYPos)
+        shoppingYPos += 6
+      }
+    })
+  }
 
   yPos += 65
 

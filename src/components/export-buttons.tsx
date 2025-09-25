@@ -40,7 +40,7 @@ export function ExportButtons({
 }: ExportButtonsProps) {
   const handleExportPDF = async () => {
     try {
-      await exportToPDF(data, filename)
+      await exportToPDF(data, filename, calculations)
     } catch (error) {
       console.error('Error exporting PDF:', error)
     }
@@ -82,15 +82,18 @@ export function ExportButtons({
     }
 
     if (calculations.beer > 0) {
-      message += `🍺 Cerveza: ${Math.ceil(calculations.beer / 330)} botellas\n`
+      const beerBottles = Math.ceil(calculations.beer / 330)
+      message += `🍺 Cerveza: ${beerBottles} ${beerBottles === 1 ? 'botella' : 'botellas'} de 330ml\n`
     }
 
     if (calculations.wine > 0) {
-      message += `🍷 Vino: ${Math.ceil(calculations.wine / 750)} botellas\n`
+      const wineBottles = Math.ceil(calculations.wine / 750)
+      message += `🍷 Vino: ${wineBottles} ${wineBottles === 1 ? 'botella' : 'botellas'} de 750ml\n`
     }
 
     if (calculations.soda > 0) {
-      message += `🥤 Bebidas: ${Math.ceil(calculations.soda / 2000)} botellas 2L\n`
+      const sodaBottles = Math.ceil(calculations.soda / 2000)
+      message += `🥤 Bebidas: ${sodaBottles} ${sodaBottles === 1 ? 'botella' : 'botellas'} de 2L\n`
     }
 
     message += `\n💵 *TOTAL ESTIMADO:* ${formatPrice(calculations.totalPrice)}\n`
