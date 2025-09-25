@@ -149,7 +149,7 @@ export default function Page() {
               <Card className="mb-8 rounded-3xl p-10 drop-shadow-xl">
                 <div className="p-2 md:p-6">
                   <div className="relative">
-                    <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
+                    <h3 className="mb-4 flex items-center gap-2 font-serif text-xl">
                       <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                         1
                       </span>
@@ -285,11 +285,11 @@ export default function Page() {
 
                   {peopleCount > 0 && (
                     <div className="relative mt-12">
-                      <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
+                      <h3 className="mb-4 flex items-center gap-2 font-serif text-xl">
                         <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                           2
                         </span>
-                        Selecciona tu presupuesto
+                        Selecciona tu presupuesto 💰
                       </h3>
                       <p className="mb-4 text-xs text-white/60">
                         Precios actualizados: {formatDateToSpanish(lastUpdated)}
@@ -361,11 +361,11 @@ export default function Page() {
                             </div>
 
                             <div className="mt-4 space-y-2">
-                              <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
+                              <h3 className="mb-4 flex items-center gap-2 font-serif text-xl">
                                 <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                                   3
                                 </span>
-                                Bebestibles
+                                Bebestibles 🍺
                               </h3>
 
                               <div className="space-y-2">
@@ -459,8 +459,8 @@ export default function Page() {
 
                     <div className="space-y-6">
                       <div className="rounded-lg border p-5 text-white shadow-lg">
-                        <p className="mb-2 font-serif text-sm">Carne necesaria</p>
-                        <p className="text-2xl font-bold">{calculations.meat}kg 🍖</p>
+                        <p className="mb-2 font-serif text-sm">Carne necesaria 🍖</p>
+                        <p className="text-2xl font-bold">{calculations.meat}kg</p>
                         {budgetSelected && (
                           <div className="mt-3 border-t border-white/20 pt-3">
                             <p className="mb-2 font-serif text-xs opacity-80">
@@ -483,11 +483,11 @@ export default function Page() {
                       {isSausageSelected && (
                         <div className="grid grid-cols-2 gap-4">
                           <div className="rounded-lg border p-5 text-white shadow-lg">
-                            <p className="mb-2 font-serif text-sm">Embutidos</p>
+                            <p className="mb-2 font-serif text-sm">Embutidos 🌭</p>
                             <p className="text-xl font-semibold">{calculations.sausage}kg</p>
                           </div>
                           <div className="rounded-lg border p-5 text-white shadow-lg">
-                            <p className="mb-2 font-serif text-sm">Pan</p>
+                            <p className="mb-2 font-serif text-sm">Pan 🍞</p>
                             <p className="text-xl font-semibold">{calculations.bread}kg</p>
                           </div>
                         </div>
@@ -495,7 +495,7 @@ export default function Page() {
 
                       {isVegetablesSelected && (
                         <div className="rounded-lg border p-5 text-white shadow-lg">
-                          <p className="mb-2 font-serif text-sm">Vegetales</p>
+                          <p className="mb-2 font-serif text-sm">Vegetales 🥗</p>
                           <p className="text-xl font-semibold">{calculations.vegetables}kg</p>
                         </div>
                       )}
@@ -509,24 +509,26 @@ export default function Page() {
                               <p className="text-xl font-semibold">{user.vegan * 2} unidades</p>
                             </div>
                             <div className="rounded-lg border p-5 text-white shadow-lg">
-                              <p className="mb-2 font-serif text-sm">Verduras asadas</p>
-                              <p className="text-xl font-semibold">{user.vegan * 0.3}kg</p>
+                              <p className="mb-2 font-serif text-sm">Verduras asadas 🥬</p>
+                              <p className="text-xl font-semibold">
+                                {calculations.grilledVegetables}kg
+                              </p>
                             </div>
                           </div>
                           <div className="rounded-lg border p-5 text-white shadow-lg">
-                            <p className="mb-2 font-serif text-sm">Tofu marinado</p>
-                            <p className="text-xl font-semibold">{user.vegan * 0.2}kg</p>
+                            <p className="mb-2 font-serif text-sm">Tofu marinado 🥬</p>
+                            <p className="text-xl font-semibold">{calculations.marinatedTofu}kg</p>
                           </div>
                         </div>
                       )}
 
                       {(includeBeer || includeWine || includeSoda) && (
                         <div className="space-y-4">
-                          <h4 className="font-serif text-base font-medium">Bebestibles 🥤</h4>
+                          <h4 className="font-serif text-base font-medium">Bebestibles 🍻</h4>
                           <div className="grid gap-4 sm:grid-cols-3">
                             {includeBeer && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
-                                <p className="mb-2 font-serif text-sm">Cerveza</p>
+                                <p className="mb-2 font-serif text-sm">Cerveza 🍺</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.beer / 330)}{' '}
                                   {Math.ceil(calculations.beer / 330) === 1
@@ -538,7 +540,7 @@ export default function Page() {
                             )}
                             {includeWine && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
-                                <p className="mb-2 font-serif text-sm">Vino</p>
+                                <p className="mb-2 font-serif text-sm">Vino 🍷</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.wine / 750)}{' '}
                                   {Math.ceil(calculations.wine / 750) === 1
@@ -550,7 +552,7 @@ export default function Page() {
                             )}
                             {includeSoda && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
-                                <p className="mb-2 font-serif text-sm">Bebidas/Jugos</p>
+                                <p className="mb-2 font-serif text-sm">Bebidas/Jugos 🥤</p>
                                 <p className="text-xl font-semibold">
                                   {Math.ceil(calculations.soda / 2000)}{' '}
                                   {Math.ceil(calculations.soda / 2000) === 1
@@ -788,11 +790,11 @@ export default function Page() {
                                   : 'No incluido',
                               'Verduras asadas veganas':
                                 user.vegan > 0
-                                  ? `${user.vegan * 0.3}kg - $${formatPrice(user.vegan * 0.3 * 3000)}`
+                                  ? `${calculations.grilledVegetables}kg - $${formatPrice(user.vegan * 0.3 * 3000)}`
                                   : 'No incluido',
                               'Tofu marinado':
                                 user.vegan > 0
-                                  ? `${user.vegan * 0.2}kg - $${formatPrice(user.vegan * 0.2 * 15000)}`
+                                  ? `${calculations.marinatedTofu}kg - $${formatPrice(user.vegan * 0.2 * 15000)}`
                                   : 'No incluido',
                               Total: `$${formatPrice(totalPrice)}`,
                               'Por adulto': `$${formatPrice(pricePerAdult)}`,
@@ -810,6 +812,14 @@ export default function Page() {
                             soda: includeSoda ? calculations.soda : 0,
                             totalPrice: totalPrice,
                             pricePerAdult: pricePerAdult,
+                            veganOptions:
+                              user.vegan > 0
+                                ? {
+                                    lentilBurgers: calculations.lentilBurgers,
+                                    vegetables: calculations.grilledVegetables,
+                                    tofu: calculations.marinatedTofu,
+                                  }
+                                : undefined,
                           }}
                           budgetName={budgetSelected?.name}
                           peopleCount={peopleCount}
