@@ -17,6 +17,11 @@ interface ExportButtonsProps {
     soda: number
     totalPrice: number
     pricePerAdult: number
+    veganOptions?: {
+      lentilBurgers: number
+      vegetables: number
+      tofu: number
+    }
   }
   budgetName?: string
   peopleCount?: number
@@ -79,6 +84,18 @@ export function ExportButtons({
 
     if (calculations.carbon > 0) {
       message += `🔥 Carbón: ${calculations.carbon}kg\n`
+    }
+
+    if (calculations.veganOptions) {
+      if (calculations.veganOptions.lentilBurgers > 0) {
+        message += `🥬 Hamburguesas de lentejas: ${Math.round(calculations.veganOptions.lentilBurgers)} unidades\n`
+      }
+      if (calculations.veganOptions.vegetables > 0) {
+        message += `🥕 Verduras para asar: ${calculations.veganOptions.vegetables}kg\n`
+      }
+      if (calculations.veganOptions.tofu > 0) {
+        message += `🥘 Tofu: ${calculations.veganOptions.tofu}kg\n`
+      }
     }
 
     if (calculations.beer > 0) {
