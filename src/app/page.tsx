@@ -88,7 +88,10 @@ export default function Page() {
 
   const { favorites, removeFavorite } = useFavoritesStore()
 
-  const peopleCount = user.men + user.women + user.children
+  const peopleCount = user.men + user.women + user.children + user.vegan
+  const nonVeganCount = user.men + user.women + user.children
+  const isVeganOnly = user.vegan > 0 && nonVeganCount === 0
+  const isChildrenOnly = user.children > 0 && user.men + user.women + user.vegan === 0
 
   const calculations = calculateAsado(user, drinkConsumptionLevel)
   const totalPrice = calculations.totalPrice({
@@ -98,11 +101,38 @@ export default function Page() {
     isSausageSelected,
     isCarbonSelected,
     isVegetablesSelected,
-    includeBeer,
-    includeWine,
+    includeBeer: includeBeer && !isChildrenOnly,
+    includeWine: includeWine && !isChildrenOnly,
     includeSoda,
   })
-  const pricePerAdult = calculations.pricePerAdult(totalPrice, user.men + user.women + user.vegan)
+
+  // Calculate separate pricing for vegans and non-vegans
+  const separatePricing =
+    user.vegan > 0
+      ? calculations.separateVeganPricing({
+          budgetSelected: budgetSelected
+            ? transformBudgetForTotalPrice(budgets.find((b) => b.id === budgetSelected.id)!)
+            : null,
+          isSausageSelected,
+          isCarbonSelected,
+          isVegetablesSelected,
+          includeBeer: includeBeer && !isChildrenOnly,
+          includeWine: includeWine && !isChildrenOnly,
+          includeSoda,
+          veganCount: user.vegan,
+        })
+      : null
+
+  const pricePerAdult = isChildrenOnly
+    ? calculations.pricePerAdult(totalPrice, user.children)
+    : isVeganOnly
+      ? separatePricing?.veganPerPerson || 0
+      : separatePricing
+        ? calculations.pricePerAdult(
+            separatePricing.nonVeganTotal,
+            user.men + user.women + user.children,
+          )
+        : calculations.pricePerAdult(totalPrice, user.men + user.women + user.vegan)
 
   // Background image state for client-side hydration
   const [backgroundImage, setBackgroundImage] = useState('0.jpg')
@@ -289,76 +319,88 @@ export default function Page() {
                         <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                           2
                         </span>
-                        Selecciona tu presupuesto 💰
+                        {isVeganOnly
+                          ? 'Selecciona tus opciones 🥬'
+                          : 'Selecciona tu presupuesto 💰'}
                       </h3>
-                      <p className="mb-4 text-xs text-white/60">
-                        Precios actualizados: {formatDateToSpanish(lastUpdated)}
-                      </p>
+                      {!isVeganOnly && (
+                        <p className="mb-4 text-xs text-white/60">
+                          Precios actualizados: {formatDateToSpanish(lastUpdated)}
+                        </p>
+                      )}
 
                       <div className="space-y-4">
-                        <Select
-                          value={budgetSelected?.id !== undefined ? String(budgetSelected.id) : ''}
-                          onValueChange={(value) =>
-                            setBudgetSelected(
-                              budgets.find((b) => b.id === Number(value))
-                                ? transformBudget(budgets.find((b) => b.id === Number(value))!)
-                                : null,
-                            )
-                          }
-                        >
-                          <SelectTrigger className="h-12 w-full border-2 text-white">
-                            <SelectValue placeholder="Selecciona un presupuesto" />
-                          </SelectTrigger>
-                          <SelectContent className="border-2 ">
-                            {budgets.map((budget) => (
-                              <SelectItem
-                                key={budget.id}
-                                value={String(budget.id)}
-                                className="hover:bg-amber-900/20"
-                              >
-                                {budget.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        {!isVeganOnly && (
+                          <Select
+                            value={
+                              budgetSelected?.id !== undefined ? String(budgetSelected.id) : ''
+                            }
+                            onValueChange={(value) =>
+                              setBudgetSelected(
+                                budgets.find((b) => b.id === Number(value))
+                                  ? transformBudget(budgets.find((b) => b.id === Number(value))!)
+                                  : null,
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-12 w-full border-2 text-white">
+                              <SelectValue placeholder="Selecciona un presupuesto" />
+                            </SelectTrigger>
+                            <SelectContent className="border-2 ">
+                              {budgets.map((budget) => (
+                                <SelectItem
+                                  key={budget.id}
+                                  value={String(budget.id)}
+                                  className="hover:bg-amber-900/20"
+                                >
+                                  {budget.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )}
 
-                        {budgetSelected && (
+                        {(budgetSelected || isVeganOnly) && (
                           <div className="flex flex-col gap-2">
-                            <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
-                              <Checkbox
-                                id="sausage"
-                                checked={isSausageSelected}
-                                onCheckedChange={toggleSausage}
-                                className="size-5"
-                              />
-                              <label htmlFor="sausage" className="text-sm font-medium">
-                                Incluir embutidos + pan
-                              </label>
-                            </div>
+                            <>
+                              {!isVeganOnly && (
+                                <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
+                                  <Checkbox
+                                    id="sausage"
+                                    checked={isSausageSelected}
+                                    onCheckedChange={toggleSausage}
+                                    className="size-5"
+                                  />
+                                  <label htmlFor="sausage" className="text-sm font-medium">
+                                    Incluir embutidos + pan
+                                  </label>
+                                </div>
+                              )}
 
-                            <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
-                              <Checkbox
-                                id="carbon"
-                                checked={isCarbonSelected}
-                                onCheckedChange={toggleCarbon}
-                                className="size-5"
-                              />
-                              <label htmlFor="carbon" className="text-sm font-medium">
-                                Incluir carbón
-                              </label>
-                            </div>
+                              <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
+                                <Checkbox
+                                  id="carbon"
+                                  checked={isCarbonSelected}
+                                  onCheckedChange={toggleCarbon}
+                                  className="size-5"
+                                />
+                                <label htmlFor="carbon" className="text-sm font-medium">
+                                  Incluir carbón
+                                </label>
+                              </div>
 
-                            <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
-                              <Checkbox
-                                id="vegetables"
-                                checked={isVegetablesSelected}
-                                onCheckedChange={toggleVegetables}
-                                className="size-5"
-                              />
-                              <label htmlFor="vegetables" className="text-sm font-medium">
-                                Incluir vegetales
-                              </label>
-                            </div>
+                              <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
+                                <Checkbox
+                                  id="vegetables"
+                                  checked={isVegetablesSelected}
+                                  onCheckedChange={toggleVegetables}
+                                  className="size-5"
+                                />
+                                <label htmlFor="vegetables" className="text-sm font-medium">
+                                  Incluir vegetales extras
+                                </label>
+                              </div>
+                            </>
 
                             <div className="mt-4 space-y-2">
                               <h3 className="mb-4 flex items-center gap-2 font-serif text-xl">
@@ -405,28 +447,32 @@ export default function Page() {
                                 </div>
                               </div>
 
-                              <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
-                                <Checkbox
-                                  id="beer"
-                                  checked={includeBeer}
-                                  onCheckedChange={toggleBeer}
-                                  className="size-5"
-                                />
-                                <label htmlFor="beer" className="text-sm font-medium">
-                                  Incluir cerveza
-                                </label>
-                              </div>
-                              <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
-                                <Checkbox
-                                  id="wine"
-                                  checked={includeWine}
-                                  onCheckedChange={toggleWine}
-                                  className="size-5"
-                                />
-                                <label htmlFor="wine" className="text-sm font-medium">
-                                  Incluir vino
-                                </label>
-                              </div>
+                              {!isChildrenOnly && (
+                                <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
+                                  <Checkbox
+                                    id="beer"
+                                    checked={includeBeer}
+                                    onCheckedChange={toggleBeer}
+                                    className="size-5"
+                                  />
+                                  <label htmlFor="beer" className="text-sm font-medium">
+                                    Incluir cerveza
+                                  </label>
+                                </div>
+                              )}
+                              {!isChildrenOnly && (
+                                <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
+                                  <Checkbox
+                                    id="wine"
+                                    checked={includeWine}
+                                    onCheckedChange={toggleWine}
+                                    className="size-5"
+                                  />
+                                  <label htmlFor="wine" className="text-sm font-medium">
+                                    Incluir vino
+                                  </label>
+                                </div>
+                              )}
                               <div className="flex items-center space-x-2 rounded-lg px-3 py-2">
                                 <Checkbox
                                   id="soda"
@@ -447,7 +493,7 @@ export default function Page() {
                 </div>
               </Card>
 
-              {peopleCount > 0 && budgetSelected && (
+              {peopleCount > 0 && (budgetSelected || isVeganOnly) && (
                 <Card className="mb-8 p-10">
                   <div className="p-2 md:p-6">
                     <h3 className="mb-6 flex items-center gap-2 font-serif text-xl">
@@ -458,29 +504,31 @@ export default function Page() {
                     </h3>
 
                     <div className="space-y-6">
-                      <div className="rounded-lg border p-5 text-white shadow-lg">
-                        <p className="mb-2 font-serif text-sm">Carne necesaria 🍖</p>
-                        <p className="text-2xl font-bold">{calculations.meat}kg</p>
-                        {budgetSelected && (
-                          <div className="mt-3 border-t border-white/20 pt-3">
-                            <p className="mb-2 font-serif text-xs opacity-80">
-                              Cortes recomendados:
-                            </p>
-                            <div className="flex flex-wrap gap-1">
-                              {budgetSelected.meats.map((meat) => (
-                                <span
-                                  key={meat.id}
-                                  className="inline-block rounded-full bg-white/10 px-2 py-1 text-xs font-medium"
-                                >
-                                  {meat.name}
-                                </span>
-                              ))}
+                      {!isVeganOnly && (
+                        <div className="rounded-lg border p-5 text-white shadow-lg">
+                          <p className="mb-2 font-serif text-sm">Carne necesaria 🍖</p>
+                          <p className="text-2xl font-bold">{calculations.meat}kg</p>
+                          {budgetSelected && (
+                            <div className="mt-3 border-t border-white/20 pt-3">
+                              <p className="mb-2 font-serif text-xs opacity-80">
+                                Cortes recomendados:
+                              </p>
+                              <div className="flex flex-wrap gap-1">
+                                {budgetSelected.meats.map((meat) => (
+                                  <span
+                                    key={meat.id}
+                                    className="inline-block rounded-full bg-white/10 px-2 py-1 text-xs font-medium"
+                                  >
+                                    {meat.name}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                        </div>
+                      )}
 
-                      {isSausageSelected && (
+                      {!isVeganOnly && isSausageSelected && (
                         <div className="grid grid-cols-2 gap-4">
                           <div className="rounded-lg border p-5 text-white shadow-lg">
                             <p className="mb-2 font-serif text-sm">Embutidos 🌭</p>
@@ -502,31 +550,26 @@ export default function Page() {
 
                       {user.vegan > 0 && (
                         <div className="space-y-4">
-                          <h4 className="text-base font-medium">Opciones veganas 🥬</h4>
                           <div className="grid gap-4 sm:grid-cols-2">
                             <div className="rounded-lg border p-5 text-white shadow-lg">
                               <p className="mb-2 font-serif text-sm">Hamburguesas de lentejas</p>
                               <p className="text-xl font-semibold">{user.vegan * 2} unidades</p>
                             </div>
                             <div className="rounded-lg border p-5 text-white shadow-lg">
-                              <p className="mb-2 font-serif text-sm">Verduras asadas 🥬</p>
+                              <p className="mb-2 font-serif text-sm">Tofu marinado</p>
                               <p className="text-xl font-semibold">
-                                {calculations.grilledVegetables}kg
+                                {calculations.marinatedTofu}kg
                               </p>
                             </div>
-                          </div>
-                          <div className="rounded-lg border p-5 text-white shadow-lg">
-                            <p className="mb-2 font-serif text-sm">Tofu marinado 🥬</p>
-                            <p className="text-xl font-semibold">{calculations.marinatedTofu}kg</p>
                           </div>
                         </div>
                       )}
 
-                      {(includeBeer || includeWine || includeSoda) && (
+                      {((!isChildrenOnly && (includeBeer || includeWine)) || includeSoda) && (
                         <div className="space-y-4">
                           <h4 className="font-serif text-base font-medium">Bebestibles 🍻</h4>
                           <div className="grid gap-4 sm:grid-cols-3">
-                            {includeBeer && (
+                            {!isChildrenOnly && includeBeer && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Cerveza 🍺</p>
                                 <p className="text-xl font-semibold">
@@ -538,7 +581,7 @@ export default function Page() {
                                 <p className="mt-1 text-sm text-gray-400">de 330ml</p>
                               </div>
                             )}
-                            {includeWine && (
+                            {!isChildrenOnly && includeWine && (
                               <div className="rounded-lg border p-5 text-white shadow-lg">
                                 <p className="mb-2 font-serif text-sm">Vino 🍷</p>
                                 <p className="text-xl font-semibold">
@@ -570,25 +613,30 @@ export default function Page() {
                         <p className="mb-4 font-serif text-lg font-semibold">Costos</p>
                         <div className="space-y-3">
                           <div className="space-y-2">
-                            <p className="flex justify-between font-serif text-sm">
-                              <span>Carne</span>
-                              <span>
-                                $
-                                {formatPrice(
-                                  calculations.meat *
-                                    (budgetSelected?.meats.reduce(
-                                      (acc, meat) =>
-                                        acc +
-                                        ((meat.values.lider.price.normal || 0) +
-                                          (meat.values.jumbo.price.normal || 0)) /
-                                          2,
-                                      0,
-                                    ) / (budgetSelected?.meats.length || 1) || 0),
-                                )}
-                              </span>
-                            </p>
+                            {!isVeganOnly && (
+                              <p className="flex justify-between font-serif text-sm">
+                                <span>Carne</span>
+                                <span>
+                                  $
+                                  {formatPrice(
+                                    budgetSelected
+                                      ? calculations.meat *
+                                          (budgetSelected.meats.reduce(
+                                            (acc, meat) =>
+                                              acc +
+                                              ((meat.values.lider.price.normal || 0) +
+                                                (meat.values.jumbo.price.normal || 0)) /
+                                                2,
+                                            0,
+                                          ) /
+                                            budgetSelected.meats.length)
+                                      : 0,
+                                  )}
+                                </span>
+                              </p>
+                            )}
 
-                            {isSausageSelected && (
+                            {!isVeganOnly && isSausageSelected && (
                               <>
                                 <p className="flex justify-between font-serif text-sm">
                                   <span>Embutidos</span>
@@ -613,7 +661,7 @@ export default function Page() {
                                   $
                                   {formatPrice(
                                     calculations.vegetables *
-                                      (budgetSelected?.vegetablesPrice || 0),
+                                      (budgetSelected?.vegetablesPrice || (isVeganOnly ? 3000 : 0)),
                                   )}
                                 </span>
                               </p>
@@ -628,7 +676,7 @@ export default function Page() {
                               </p>
                             )}
 
-                            {includeBeer && (
+                            {!isChildrenOnly && includeBeer && (
                               <p className="flex justify-between font-serif text-sm">
                                 <span>Cerveza</span>
                                 <span>
@@ -642,7 +690,7 @@ export default function Page() {
                               </p>
                             )}
 
-                            {includeWine && (
+                            {!isChildrenOnly && includeWine && (
                               <p className="flex justify-between font-serif text-sm">
                                 <span>Vino</span>
                                 <span>
@@ -677,10 +725,6 @@ export default function Page() {
                                   <span>${formatPrice(user.vegan * 2 * 2000)}</span>
                                 </p>
                                 <p className="flex justify-between font-serif text-sm">
-                                  <span>Verduras asadas</span>
-                                  <span>${formatPrice(user.vegan * 0.3 * 3000)}</span>
-                                </p>
-                                <p className="flex justify-between font-serif text-sm">
                                   <span>Tofu marinado</span>
                                   <span>${formatPrice(user.vegan * 0.2 * 15000)}</span>
                                 </p>
@@ -693,10 +737,51 @@ export default function Page() {
                               <span>Total</span>
                               <span className="font-bold">${formatPrice(totalPrice)}</span>
                             </p>
-                            <p className="flex justify-between font-serif text-lg text-amber-200">
-                              <span>Por adulto</span>
-                              <span className="font-bold">${formatPrice(pricePerAdult)}</span>
-                            </p>
+                            {separatePricing && !isVeganOnly ? (
+                              <>
+                                <p className="flex justify-between font-serif text-sm text-amber-200">
+                                  <span>
+                                    No veganos ({user.men + user.women + user.children} personas)
+                                  </span>
+                                  <span className="font-bold">
+                                    ${formatPrice(separatePricing.nonVeganTotal)}
+                                  </span>
+                                </p>
+                                <p className="flex justify-between font-serif text-sm text-amber-200">
+                                  <span>Veganos ({user.vegan} personas)</span>
+                                  <span className="font-bold">
+                                    ${formatPrice(separatePricing.veganTotal)}
+                                  </span>
+                                </p>
+                                <div className="mt-2 space-y-1 border-t pt-2">
+                                  <p className="flex justify-between font-serif text-sm text-amber-300">
+                                    <span>
+                                      {user.children > 0 && user.men + user.women === 0
+                                        ? 'Por niño'
+                                        : 'Por adulto no vegano'}
+                                    </span>
+                                    <span className="font-bold">${formatPrice(pricePerAdult)}</span>
+                                  </p>
+                                  <p className="flex justify-between font-serif text-sm text-amber-300">
+                                    <span>Por vegano</span>
+                                    <span className="font-bold">
+                                      ${formatPrice(separatePricing.veganPerPerson)}
+                                    </span>
+                                  </p>
+                                </div>
+                              </>
+                            ) : (
+                              <p className="flex justify-between font-serif text-lg text-amber-200">
+                                <span>
+                                  {isChildrenOnly
+                                    ? 'Por niño'
+                                    : isVeganOnly
+                                      ? 'Por vegano'
+                                      : 'Por adulto'}
+                                </span>
+                                <span className="font-bold">${formatPrice(pricePerAdult)}</span>
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -708,14 +793,13 @@ export default function Page() {
                           bread: isSausageSelected ? calculations.bread : 0,
                           carbon: isCarbonSelected ? calculations.carbon(isSausageSelected) : 0,
                           vegetables: isVegetablesSelected ? calculations.vegetables : undefined,
-                          beer: includeBeer ? calculations.beer : undefined,
-                          wine: includeWine ? calculations.wine : undefined,
+                          beer: includeBeer && !isChildrenOnly ? calculations.beer : undefined,
+                          wine: includeWine && !isChildrenOnly ? calculations.wine : undefined,
                           soda: includeSoda ? calculations.soda : undefined,
                           veganOptions:
                             user.vegan > 0
                               ? {
                                   lentilBurgers: calculations.lentilBurgers,
-                                  vegetables: calculations.grilledVegetables,
                                   tofu: calculations.marinatedTofu,
                                 }
                               : undefined,
@@ -727,23 +811,30 @@ export default function Page() {
                         <ExportButtons
                           data={[
                             {
-                              budgetId: budgetSelected?.id,
+                              budgetId: budgetSelected?.id ?? null,
                               Hombres: user.men,
                               Mujeres: user.women,
                               Niños: user.children,
                               Veganos: user.vegan,
-                              'Carne necesaria': `${calculations.meat}kg`,
-                              'Costo carne': `$${formatPrice(
-                                calculations.meat *
-                                  (budgetSelected?.meats.reduce(
-                                    (acc, meat) =>
-                                      acc +
-                                      ((meat.values.lider.price.normal || 0) +
-                                        (meat.values.jumbo.price.normal || 0)) /
-                                        2,
-                                    0,
-                                  ) / (budgetSelected?.meats.length || 1) || 0),
-                              )}`,
+                              'Carne necesaria': isVeganOnly
+                                ? 'No incluido'
+                                : `${calculations.meat}kg`,
+                              'Costo carne': isVeganOnly
+                                ? 'No incluido'
+                                : `$${formatPrice(
+                                    budgetSelected
+                                      ? calculations.meat *
+                                          (budgetSelected.meats.reduce(
+                                            (acc, meat) =>
+                                              acc +
+                                              ((meat.values.lider.price.normal || 0) +
+                                                (meat.values.jumbo.price.normal || 0)) /
+                                                2,
+                                            0,
+                                          ) /
+                                            budgetSelected.meats.length)
+                                      : 0,
+                                  )}`,
                               Embutidos: isSausageSelected
                                 ? `${calculations.sausage}kg`
                                 : 'No incluido',
@@ -758,7 +849,7 @@ export default function Page() {
                                 ? `${calculations.vegetables}kg`
                                 : 'No incluido',
                               'Costo vegetales': isVegetablesSelected
-                                ? `$${formatPrice(calculations.vegetables * (budgetSelected?.vegetablesPrice || 0))}`
+                                ? `$${formatPrice(calculations.vegetables * (budgetSelected?.vegetablesPrice || (isVeganOnly ? 3000 : 0)))}`
                                 : 'No incluido',
                               Carbón: isCarbonSelected
                                 ? `${calculations.carbon(isSausageSelected)}kg`
@@ -766,18 +857,22 @@ export default function Page() {
                               'Costo carbón': isCarbonSelected
                                 ? `$${formatPrice(calculations.carbon(isSausageSelected) * 3000)}`
                                 : 'No incluido',
-                              Cerveza: includeBeer
-                                ? `${Math.ceil(calculations.beer / 1000)}L (${Math.ceil(calculations.beer / 330)} botellas)`
-                                : 'No incluido',
-                              'Costo cerveza': includeBeer
-                                ? `$${formatPrice(calculations.beer * 0.002)}`
-                                : 'No incluido',
-                              Vino: includeWine
-                                ? `${Math.ceil(calculations.wine / 1000)}L (${Math.ceil(calculations.wine / 750)} botellas)`
-                                : 'No incluido',
-                              'Costo vino': includeWine
-                                ? `$${formatPrice(calculations.wine * 0.01)}`
-                                : 'No incluido',
+                              Cerveza:
+                                includeBeer && !isChildrenOnly
+                                  ? `${Math.ceil(calculations.beer / 1000)}L (${Math.ceil(calculations.beer / 330)} botellas)`
+                                  : 'No incluido',
+                              'Costo cerveza':
+                                includeBeer && !isChildrenOnly
+                                  ? `$${formatPrice(calculations.beer * 0.002)}`
+                                  : 'No incluido',
+                              Vino:
+                                includeWine && !isChildrenOnly
+                                  ? `${Math.ceil(calculations.wine / 1000)}L (${Math.ceil(calculations.wine / 750)} botellas)`
+                                  : 'No incluido',
+                              'Costo vino':
+                                includeWine && !isChildrenOnly
+                                  ? `$${formatPrice(calculations.wine * 0.01)}`
+                                  : 'No incluido',
                               Bebidas: includeSoda
                                 ? `${Math.ceil(calculations.soda / 1000)}L (${Math.ceil(calculations.soda / 2000)} botellas)`
                                 : 'No incluido',
@@ -788,16 +883,27 @@ export default function Page() {
                                 user.vegan > 0
                                   ? `${user.vegan * 2} unidades - $${formatPrice(user.vegan * 2 * 2000)}`
                                   : 'No incluido',
-                              'Verduras asadas veganas':
-                                user.vegan > 0
-                                  ? `${calculations.grilledVegetables}kg - $${formatPrice(user.vegan * 0.3 * 3000)}`
-                                  : 'No incluido',
                               'Tofu marinado':
                                 user.vegan > 0
                                   ? `${calculations.marinatedTofu}kg - $${formatPrice(user.vegan * 0.2 * 15000)}`
                                   : 'No incluido',
                               Total: `$${formatPrice(totalPrice)}`,
-                              'Por adulto': `$${formatPrice(pricePerAdult)}`,
+                              ...(separatePricing && !isVeganOnly
+                                ? {
+                                    'Total no veganos': `$${formatPrice(separatePricing.nonVeganTotal)} (${user.men + user.women + user.children} personas)`,
+                                    'Total veganos': `$${formatPrice(separatePricing.veganTotal)} (${user.vegan} personas)`,
+                                    [user.children > 0 && user.men + user.women === 0
+                                      ? 'Por niño'
+                                      : 'Por adulto no vegano']: `$${formatPrice(pricePerAdult)}`,
+                                    'Por vegano': `$${formatPrice(separatePricing.veganPerPerson)}`,
+                                  }
+                                : {
+                                    [isChildrenOnly
+                                      ? 'Por niño'
+                                      : isVeganOnly
+                                        ? 'Por vegano'
+                                        : 'Por adulto']: `$${formatPrice(pricePerAdult)}`,
+                                  }),
                             },
                           ]}
                           filename="asado-calculo"
@@ -807,8 +913,8 @@ export default function Page() {
                             bread: isSausageSelected ? calculations.bread : 0,
                             vegetables: isVegetablesSelected ? calculations.vegetables : 0,
                             carbon: isCarbonSelected ? calculations.carbon(isSausageSelected) : 0,
-                            beer: includeBeer ? calculations.beer : 0,
-                            wine: includeWine ? calculations.wine : 0,
+                            beer: includeBeer && !isChildrenOnly ? calculations.beer : 0,
+                            wine: includeWine && !isChildrenOnly ? calculations.wine : 0,
                             soda: includeSoda ? calculations.soda : 0,
                             totalPrice: totalPrice,
                             pricePerAdult: pricePerAdult,
@@ -816,7 +922,6 @@ export default function Page() {
                               user.vegan > 0
                                 ? {
                                     lentilBurgers: calculations.lentilBurgers,
-                                    vegetables: calculations.grilledVegetables,
                                     tofu: calculations.marinatedTofu,
                                   }
                                 : undefined,

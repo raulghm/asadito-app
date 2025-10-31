@@ -19,7 +19,6 @@ interface ExportButtonsProps {
     pricePerAdult: number
     veganOptions?: {
       lentilBurgers: number
-      vegetables: number
       tofu: number
     }
   }
@@ -71,7 +70,16 @@ export function ExportButtons({
 
     message += `💰 *Presupuesto:* ${budgetName}\n\n`
     message += `📝 *LISTA DE COMPRAS:*\n`
-    message += `🥩 Carne: ${calculations.meat}kg\n`
+
+    // Only show carne if not vegan only
+    const isVeganOnly = peopleBreakdown
+      ? peopleBreakdown.vegan > 0 &&
+        peopleBreakdown.men + peopleBreakdown.women + peopleBreakdown.children === 0
+      : false
+
+    if (calculations.meat > 0 && !isVeganOnly) {
+      message += `🥩 Carne: ${calculations.meat}kg\n`
+    }
 
     if (calculations.sausage > 0) {
       message += `🌭 Chorizo: ${calculations.sausage}kg\n`
@@ -89,9 +97,6 @@ export function ExportButtons({
     if (calculations.veganOptions) {
       if (calculations.veganOptions.lentilBurgers > 0) {
         message += `🥬 Hamburguesas de lentejas: ${Math.round(calculations.veganOptions.lentilBurgers)} unidades\n`
-      }
-      if (calculations.veganOptions.vegetables > 0) {
-        message += `🥕 Verduras para asar: ${calculations.veganOptions.vegetables}kg\n`
       }
       if (calculations.veganOptions.tofu > 0) {
         message += `🥘 Tofu: ${calculations.veganOptions.tofu}kg\n`

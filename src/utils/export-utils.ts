@@ -59,7 +59,6 @@ export async function exportToPDF(
     pricePerAdult: number
     veganOptions?: {
       lentilBurgers: number
-      vegetables: number
       tofu: number
     }
   },
@@ -132,9 +131,11 @@ export async function exportToPDF(
   if (calculations) {
     // Exactly match the order and logic from shopping-list.tsx
 
-    // • Carne: {calculations.meat}kg
-    doc.text(`• Carne: ${calculations.meat}kg`, leftMargin, yPos)
-    yPos += lineSpacing
+    // • Carne: {calculations.meat}kg (only if meat > 0, not vegan only)
+    if (calculations.meat > 0) {
+      doc.text(`• Carne: ${calculations.meat}kg`, leftMargin, yPos)
+      yPos += lineSpacing
+    }
 
     // Chorizo and Pan (only if sausage > 0)
     if (calculations.sausage > 0) {
@@ -155,14 +156,6 @@ export async function exportToPDF(
       if (calculations.veganOptions.lentilBurgers > 0) {
         doc.text(
           `• Hamburguesas de lentejas: ${Math.round(calculations.veganOptions.lentilBurgers)} unidades`,
-          leftMargin,
-          yPos,
-        )
-        yPos += lineSpacing
-      }
-      if (calculations.veganOptions.vegetables > 0) {
-        doc.text(
-          `• Verduras para asar: ${calculations.veganOptions.vegetables}kg`,
           leftMargin,
           yPos,
         )

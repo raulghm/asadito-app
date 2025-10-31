@@ -10,7 +10,6 @@ interface ShoppingListProps {
     soda?: number
     veganOptions?: {
       lentilBurgers: number
-      vegetables: number
       tofu: number
     }
   }
@@ -33,7 +32,7 @@ export function ShoppingList({ calculations }: ShoppingListProps) {
       <div className="ml-10">
         <h4 className="mb-4 font-serif text-base font-semibold">Lista de Compras 📝</h4>
         <div className="space-y-2 font-serif text-lg">
-          <p>• Carne: {calculations.meat}kg</p>
+          {calculations.meat > 0 && <p>• Carne: {calculations.meat}kg</p>}
 
           {calculations?.sausage > 0 && (
             <>
@@ -52,7 +51,6 @@ export function ShoppingList({ calculations }: ShoppingListProps) {
                 • Hamburguesas de lentejas: {Math.round(calculations.veganOptions.lentilBurgers)}{' '}
                 unidades
               </p>
-              <p>• Verduras para asar: {calculations.veganOptions.vegetables}kg</p>
               <p>• Tofu: {calculations.veganOptions.tofu}kg</p>
             </>
           )}
